@@ -1,0 +1,33 @@
+Vivado Simulator 2019.1
+Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
+Running: /bigsoft/Xilinx/Vivado/2019.1/bin/unwrapped/lnx64.o/xelab work.tb_system -nolog -debug typical -cc gcc 
+Multi-threading is on. Using 10 slave threads.
+Starting static elaboration
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package std.standard
+Compiling package std.textio
+Compiling package ieee.std_logic_1164
+Compiling package ieee.numeric_std
+Compiling package unisim.vcomponents
+Compiling package work.cpu_pkg
+Compiling package ieee.std_logic_arith
+Compiling package ieee.std_logic_signed
+Compiling package ieee.vital_timing
+Compiling package ieee.vital_primitives
+Compiling package unisim.vpkg
+Compiling package xpm.vcomponents
+Compiling package vl.vl_types
+Compiling architecture mmcme2_adv_v of entity unisim.MMCME2_ADV [\MMCME2_ADV(clkfbout_mult_f=8.0,...]
+Compiling architecture mmcme2_base_v of entity unisim.MMCME2_BASE [\MMCME2_BASE(clkfbout_mult_f=8.0...]
+Compiling architecture rtl of entity work.PO [po_default]
+Compiling architecture behavioral of entity work.PC [pc_default]
+Compiling module xpm.xpm_memory_base(MEMORY_TYPE=0,ME...
+Compiling module xpm.xpm_memory_spram(MEMORY_SIZE=655...
+Compiling architecture behavioral of entity work.RAM8 [\RAM8(file_name="boot_defaut.mem...]
+Compiling architecture behavioral of entity work.periph [periph_default]
+Compiling architecture struct of entity work.system [system_default]
+Compiling architecture behavioral of entity work.tb_system
+Built simulation snapshot work.tb_system

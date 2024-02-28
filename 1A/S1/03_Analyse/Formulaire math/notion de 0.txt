@@ -1,0 +1,15 @@
+remarque important :
+
+1) o(f)+ o(g) = o(f+g)
+
+2) o(o(f))=o(f)
+
+3)o(f)o(g)=o(fg)
+
+4) f=o(1) donc f----->0
+
+5) xo(f)=o(xf)=o(f)
+
+6) si f=o(g) et g=o(h) alors f=o(h)  (transitivite)
+
+

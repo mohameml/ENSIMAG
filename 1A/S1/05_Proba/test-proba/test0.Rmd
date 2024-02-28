@@ -1,0 +1,176 @@
+------------------------------------------------------------------------
+
+title: "test0" author: "MOHAMEDAHMED-Mohmedlemine" date: "2022-09-29" output: html_document
+
+Probleme 1:
+
+questio 1
+
+on note p la probabilite que 1 apparaite los du lancement pour Eva
+
+donc p=1/6
+
+on note A:"1 n'apparait pas lors du lancement pour Eva"
+
+on a donc l'evenment $(Ne>K)=\bigcap_{i=1}^{k}A=i$
+
+donc p(Ne\>k)=p($\bigcap_{i=1}^{k}A=i$)
+
+$=\prod_{i=1}^{k}p(A=i)$ (par independace des evenments(A=i) )
+
+donc p(Ne\>k)=$=\prod_{i=1}^{k}1-p$
+
+donc $p(Ne>k)=(\frac{5}{6})^{k}$
+
+p(Ne=k)=p(Ne>k-1)-p(Ne>k)
+
+donc $p(Ne=k)=\frac{1}{6}(\frac{5}{6})^{k-1}$
+
+donc Ne suit une loi geometrique de parametre $\frac{1}{6}$ 
+
+Question 2:
+
+on note Nr:le rang d'pparition de 1 lors du lancement chez Raph
+
+par meme raisonnement on Nr suit une loi geometrique de parametre $\frac{1}{7}$
+
+ona l'evenement (N=k)=(Ne=k)$\cup$(Nr=k)
+
+comme les evenments (Nr=k) et (Ne=k) sont independants 
+
+alors p(N=k)=p(Nr=k)+p(Ne=k)
+donc p(N=k)=$\frac{1}{6}(\frac{5}{6})^{k-1}$+$\frac{1}{7}(\frac{6}{7})^{k-1}$
+
+donc p(N>k)=1-p(N<=k)
+
+p(N>k)=1-p($\bigcup_{i=1}^{k}N=i$)
+ donc p(N>k)=
+ 
+ question 3:
+ 
+ la probabilite que Eva gange est p(Ne<Nr)=p($\bigcup_{i=1}^{+\infty}(Ne=i)\cap(Nr>k)$)
+ 
+ par l'independace on a p(Ne<Nr)=$\sum_{i=1}^{+\infty}p(Ne=i)p(Nr>k)$
+ 
+ p(Ne<Nr)=$\sum_{i=1}^{+\infty}\frac{1}{6}(\frac{5}{6})^{k-1}(\frac{6}{7})^{k}$
+ 
+ donc p(Ne<Nr)=$\frac{1}{2}$
+ 
+ question 4:
+ on note l'evenment A:"Eva lance infinement le de et ne trouve pas 1"
+  
+  et l'evenment B:"Raph lance infinement le de et ne trouve pas 1"
+  
+  donc macth nul=A$\cap$B
+  
+par l'independance des evenments on a p(match nul)=p(A)p(B)
+ calcul de p(A):
+ on note An:"Eva ne trouve pas 1 a la nieme lancement"
+ 
+ donc A=$\bigcap_{k=1}^{+\infty}An$
+ 
+ par l'independance des evenments An et theoreme continutie sequentielle croissant on a
+ 
+ p(A)=$\lim_{ n\rightarrow +\infty}p(\bigcap_{k=1}^{n}Ak)$
+ 
+ p(A)=$\lim_{ n\rightarrow +\infty}\prod_{k=1}^{n}p(Ak)$
+
+
+ p(A)=$\lim_{ n\rightarrow +\infty}(\frac{5}{6})^{n}$
+ 
+ donc p(A)=0 de meme p(B)=0
+ 
+ donc la probabilite de match nul est 0
+ 
+ question 5:
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ probleme2:
+  
+  question1:
+  
+$p(W<\frac{1}{3})=p((W<\frac{1}{3})\cap(U<\frac{1}{4}))+p((W<\frac{1}{3})\cap(U>=\frac{1}{4}))$ 
+
+donc$ p(W<\frac{1}{3})=p(V<\frac{1}{3})p(U<\frac{1}{4})+p(V<\frac{1}{9})p(U>=\frac{1}{4})$
+
+donc $p(W<\frac{1}{3})=\frac{1}{6}$
+
+question2:
+
+
+
+
+
+
+
+
+
+
+
+
+probleme 3:
+
+par linearite de l'esperance ona E(Z)=E(X)+E(Y)
+
+or l'esperance de X est 1 E(X)=1
+
+
+  
+  
+  
+  
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+

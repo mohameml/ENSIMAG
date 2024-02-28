@@ -1,0 +1,182 @@
+/*
+
+Xilinx xsim v2019.1 (64-bit) [Major: 2019, Minor: 1]
+SW Build: 2552052 on Fri May 24 14:47:09 MDT 2019
+IP Build: 2548770 on Fri May 24 18:01:18 MDT 2019
+
+Process ID (PID): 51920
+License: Customer
+
+Current time: 	Fri Feb 03 15:54:55 CET 2023
+Time zone: 	Central European Standard Time (Europe/Paris)
+
+OS: Ubuntu
+OS Version: 5.15.0-58-generic
+OS Architecture: amd64
+Available processors (cores): 4
+
+Display: :0
+Screen size: 1920x1080
+Screen resolution (DPI): 100
+Available screens: 1
+Available disk space: 18 GB
+Default font: family=Dialog,name=Dialog,style=plain,size=12
+
+Java version: 	9.0.4 64-bit
+Java home: 	/bigsoft/Xilinx/Vivado/2019.1/tps/lnx64/jre9.0.4
+Java executable location: 	/bigsoft/Xilinx/Vivado/2019.1/tps/lnx64/jre9.0.4/bin/java
+Java initial memory (-Xms): 	128 MB
+Java maximum memory (-Xmx):	 3 GB
+
+
+User name: 	mohameml
+User home directory: /user/8/.base/mohameml/home
+User working directory: /user/8/.base/mohameml/home/Desktop/Archi/TP2/src_etd
+User country: 	US
+User language: 	en
+User locale: 	en_US
+
+RDI_BASEROOT: /bigsoft/Xilinx/Vivado
+HDI_APPROOT: /bigsoft/Xilinx/Vivado/2019.1
+RDI_DATADIR: /bigsoft/Xilinx/Vivado/2019.1/data
+RDI_BINDIR: /bigsoft/Xilinx/Vivado/2019.1/bin
+
+Vivado preferences file location: /user/8/mohameml/.Xilinx/xsim/2019.1/vivado.xml
+Vivado preferences directory: /user/8/mohameml/.Xilinx/xsim/2019.1/
+Vivado layouts directory: /user/8/.base/mohameml/home/.Xilinx/xsim/2019.1/layouts
+PlanAhead jar file location: 	/bigsoft/Xilinx/Vivado/2019.1/lib/classes/planAhead.jar
+Vivado log file location: 	
+Vivado journal file location: 	/user/8/.base/mohameml/home/Desktop/Archi/TP2/src_etd/xsim.jou
+Engine tmp dir: 	./.Xil/xsim-51920-ensipc414
+
+Xilinx Environment Variables
+----------------------------
+XILINX: /bigsoft/Xilinx/Vivado/2019.1/ids_lite/ISE
+XILINX_DSP: /bigsoft/Xilinx/Vivado/2019.1/ids_lite/ISE
+XILINX_PLANAHEAD: /bigsoft/Xilinx/Vivado/2019.1
+XILINX_SDK: /bigsoft/Xilinx/SDK/2019.1
+XILINX_VIVADO: /bigsoft/Xilinx/Vivado/2019.1
+
+
+GUI allocated memory:	549 MB
+GUI max memory:		3,072 MB
+Engine allocated memory: 1,281 MB
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+
+*/
+
+// TclEventType: START_GUI
+// Tcl Message: start_gui 
+// TclEventType: START_PROGRESS_DIALOG
+// by (cl):  Sourcing Tcl script 'xsim.dir/work.tb_compteurgene/xsim_script.tcl' : addNotify
+// Tcl Message: source xsim.dir/work.tb_compteurgene/xsim_script.tcl 
+// Tcl Message: # set_param project.enableReportConfiguration 0 # load_feature core 
+// TclEventType: LOAD_FEATURE
+// TclEventType: DEBUG_PROBE_SET_CHANGE
+// TclEventType: FILE_SET_NEW
+// TclEventType: RUN_ADD
+// TclEventType: RUN_CURRENT
+// TclEventType: PROJECT_DASHBOARD_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_NEW
+// Tcl Message: # current_fileset 
+// TclEventType: PROJECT_NEW
+// [GUI Memory]: 83 MB (+84406kb) [00:00:07]
+// [Engine Memory]: 1,223 MB (+1130707kb) [00:00:07]
+// [GUI Memory]: 108 MB (+22366kb) [00:00:07]
+// WARNING: HEventQueue.dispatchEvent() is taking  1195 ms.
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1704] No user IP repositories specified INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/bigsoft/Xilinx/Vivado/2019.1/data/ip'. 
+// Tcl Message: # xsim {work.tb_compteurgene} -wdb {tb_compteurgene_isim_beh.wdb} -autoloadwcfg -tclbatch {common/run.tcl} 
+// Tcl Message: Vivado Simulator 2019.1 
+// TclEventType: SIMULATION_CREATE_SIMULATION_OBJECT
+// TclEventType: SIMULATION_UPDATE_SIMULATION_STATE
+// TclEventType: SIMULATION_UPDATE_SCOPE_TREE
+// TclEventType: SIMULATION_UPDATE_STACKS
+// TclEventType: SIMULATION_UPDATE_OBJECT_TREE
+// TclEventType: SIMULATION_UPDATE_PROTOCOL_INSTANCE_TREE
+// [Engine Memory]: 1,317 MB (+34496kb) [00:00:09]
+// Tcl Message: Time resolution is 1 ps 
+// TclEventType: SIMULATION_UPDATE_SCOPE_TREE
+// HMemoryUtils.trashcanNow. Engine heap size: 935 MB. GUI used memory: 51 MB. Current time: 2/3/23, 3:54:57 PM CET
+// TclEventType: SIMULATION_UPDATE_STACKS
+// TclEventType: SIMULATION_UPDATE_OBJECT_TREE
+// TclEventType: SIMULATION_UPDATE_PROTOCOL_INSTANCE_TREE
+// TclEventType: SIMULATION_UPDATE_SCOPE_TREE
+// TclEventType: SIMULATION_UPDATE_STACKS
+// TclEventType: SIMULATION_UPDATE_OBJECT_TREE
+// TclEventType: SIMULATION_UPDATE_PROTOCOL_INSTANCE_TREE
+// TclEventType: SIMULATION_UPDATE_SCOPE_TREE
+// TclEventType: SIMULATION_UPDATE_STACKS
+// TclEventType: SIMULATION_UPDATE_OBJECT_TREE
+// TclEventType: SIMULATION_UPDATE_PROTOCOL_INSTANCE_TREE
+// TclEventType: WAVEFORM_UPDATE_TITLE
+// TclEventType: WAVEFORM_OPEN_WCFG
+// TclEventType: WAVEFORM_DELAYED_MODEL_EVENT
+// TclEventType: WAVEFORM_MODEL_EVENT
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// TclEventType: WAVEFORM_UPDATE_COMMANDS
+// Waveform: addNotify
+// TclEventType: WAVEFORM_MODEL_EVENT
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// TclEventType: WAVEFORM_MODEL_EVENT
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// TclEventType: WAVEFORM_UPDATE_COMMANDS
+// TclEventType: WAVEFORM_UPDATE_TITLE
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// TclEventType: WAVEFORM_UPDATE_TITLE
+// Tcl Message: source common/run.tcl 
+// TclEventType: WAVEFORM_DELAYED_MODEL_EVENT
+// Tcl Message: ## create_wave_config; ## add_wave /; 
+// HMemoryUtils.trashcanNow. Engine heap size: 970 MB. GUI used memory: 57 MB. Current time: 2/3/23, 3:54:58 PM CET
+// TclEventType: WAVEFORM_DELAYED_MODEL_EVENT
+// TclEventType: SIMULATION_UPDATE_SIMULATION_STATE
+// TclEventType: SIMULATION_CLEAR_CURRENT_LINE
+// TclEventType: WAVEFORM_MODEL_EVENT
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// TclEventType: WAVEFORM_UPDATE_COMMANDS
+// TclEventType: SIMULATION_UPDATE_LATEST_TIME
+// TclEventType: SIMULATION_OBJECT_TREE_RESTORED
+// TclEventType: WAVEFORM_MODEL_EVENT
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// TclEventType: SIMULATION_UPDATE_LATEST_TIME
+// TclEventType: WAVEFORM_MODEL_EVENT
+// TclEventType: SIMULATION_CURRENT_SCOPE_CHANGED
+// TclEventType: SIMULATION_CURRENT_STACK_CHANGED
+// TclEventType: SIMULATION_UPDATE_STACK_FRAMES
+// TclEventType: SIMULATION_CURRENT_STACK_FRAME_CHANGED
+// TclEventType: SIMULATION_UPDATE_LOCALS
+// TclEventType: SIMULATION_UPDATE_SCOPE_TREE
+// TclEventType: SIMULATION_UPDATE_STACKS
+// TclEventType: SIMULATION_UPDATE_OBJECT_TREE
+// TclEventType: SIMULATION_UPDATE_SIMULATION_STATE
+// TclEventType: STOP_PROGRESS_DIALOG
+dismissDialog("Sourcing Tcl script 'xsim.dir/work.tb_compteurgene/xsim_script.tcl'"); // by (cl)
+// Tcl Message: ## run 200ns 
+// TclEventType: STOP_PROGRESS_DIALOG
+// TclEventType: WAVEFORM_MODEL_EVENT
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// TclEventType: WAVEFORM_MODEL_EVENT
+selectButton(RDIResource.GraphicalView_ZOOM_FIT, "Waveform Viewer_zoom_fit"); // B (f, cl)
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// Elapsed time: 15 seconds
+selectGraphicalView(RDIResource.RDIViews_WAVEFORM_VIEWER, 588, 108); // n (o, cl)
+// TclEventType: WAVEFORM_UPDATE_COMMANDS
+// HMemoryUtils.trashcanNow. Engine heap size: 974 MB. GUI used memory: 79 MB. Current time: 2/3/23, 3:55:16 PM CET
+selectGraphicalView(RDIResource.RDIViews_WAVEFORM_VIEWER, 627, 103); // n (o, cl)
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// TclEventType: WAVEFORM_UPDATE_COMMANDS
+selectGraphicalView(RDIResource.RDIViews_WAVEFORM_VIEWER, 692, 98); // n (o, cl)
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// TclEventType: WAVEFORM_UPDATE_COMMANDS
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// HMemoryUtils.trashcanNow. Engine heap size: 993 MB. GUI used memory: 55 MB. Current time: 2/3/23, 4:25:16 PM CET

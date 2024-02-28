@@ -1,0 +1,3 @@
+copie ce lien :
+
+http://lig-enseignement.imag.fr/jeu-de-piste/abc/etape_d1.py

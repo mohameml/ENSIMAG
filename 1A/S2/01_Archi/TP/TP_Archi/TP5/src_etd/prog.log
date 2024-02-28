@@ -1,0 +1,37 @@
+WARNING: [Common 17-138] Cannot open file : vivado.jou
+WARNING: [Common 17-138] Cannot open file : vivado.log
+
+****** Vivado v2019.1 (64-bit)
+  **** SW Build 2552052 on Fri May 24 14:47:09 MDT 2019
+  **** IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+    ** Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+
+source common/programFPGA.vivado.tcl
+# set DESIGN    [lindex $argv 0]
+# set DEVICE    [lindex $argv 1]
+# set BIT_FILE  [lindex $argv 2]
+# open_hw
+# connect_hw_server
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Labtools 27-2222] Launching hw_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+****** Xilinx hw_server v2019.1
+  **** Build date : May 24 2019 at 15:06:40
+    ** Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+
+
+# refresh_hw_server
+WARNING: [Labtoolstcl 44-27] No hardware targets exist on the server [localhost:3121]
+Check to make sure the cable targets connected to this machine are properly connected
+and powered up, then use the refresh_hw_server command to re-register the hardware targets.
+ERROR: [Labtoolstcl 44-199] No matching targets found on connected servers: localhost
+Resolution: If needed connect the desired target to a server and use command refresh_hw_server. Then rerun the get_hw_targets command.
+ERROR: [Common 17-39] 'get_hw_targets' failed due to earlier errors.
+
+    while executing
+"get_hw_targets"
+    invoked from within
+"set  targets [get_hw_targets]"
+    (file "common/programFPGA.vivado.tcl" line 12)
+INFO: [Common 17-206] Exiting Vivado at Tue Feb 28 15:51:51 2023...

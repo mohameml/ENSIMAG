@@ -1,0 +1,157 @@
+---
+title: "Projet_PMS"
+author: "MOHAMEDAHMED-Mohmedlemine"
+date: "2023-04-11"
+output: html_document
+---
+
+# Partie1 : Assurance maritime 
+
+
+### question1 :
+#### Loi expontielle : <br>
+* Graphres des probabilites : <br>
+$$\forall x \in \mathbf{R^{+}}  ~ F(x)=P(X \leq x) = 1 - e^{-\lambda x}$$ 
+$$\forall x \in \mathbf{R^{+}}  ~ ln(1-F(x))=-\lambda x$$ 
+le graphe de probabilites de loi expontielle est le nuage des points : <br>
+
+$$\{x_i^{*}, ln(1- \frac{i}{n})\} ~ pour~ i\in \{1,2,3,...,n-1 \}$$ <br>
+
+
+```{r}
+   
+    x <-scan("sinistres.csv")
+    n <- length(x)
+    xt <- sort(x)
+    plot(xt[1:n-1],log(1-seq(1,n-1)/n),main="graphes de proba de exp ",xlim=c(xt[1],xt[n-1]),pch=20)
+   
+```
+
+Le non alignement des points dans le graphe ci-dessus montre bien que la loi exponentielle n'est pas un modèle plausible pour décrire les montants des sinistres. <br>
+
+* Histogrammes pour la loi exponentielle:<br>
+
+```{r}
+    
+x <-scan("sinistres.csv")
+n <- length(x)
+k<-round(1+log2(n)) 
+xt<-sort(x)
+a0=xt[1]-0.025*(xt[n]-xt[1])
+ak=xt[n]+0.025*(xt[n]-xt[1])
+h<-(ak-a0)/n
+bornes <- c(a0,quantile(x,seq(1,k-1)/k),ak)
+par(mfcol=c(1,2))
+hist(x,prob=T , breaks=bornes, main="histo de les montants des sinistres",xlim=c(0,5))
+plot(dexp,main="densite de exp" ,xlim=c(0,5), col="red",pch=20)
+
+```
+<br>
+l'histogramme donne  une approximation de la densite de la loi correspondante.<br> 
+le graphe ci-dessus montre bien que la loi exponentielle n'est pas un modèle plausible pour décrire les montants des sinistres. 
+
+<br>
+
+#### Loi normale : <br>
+* Graphres des probabilites : <br>
+si La variable aléatoire $X$ suit une loi normale de moyenne $\mu$ et  d'écart type $\sigma$ $X \sim \mathcal{N}(\mu,\,\sigma^{2})$ 
+Alors<br>:
+$$\frac{X-m}{\sigma} ~ suit ~ une ~  loi ~ \mathcal{N}(0,1)$$
+
+$$\forall x \in \mathbf{R} ~ F(x)=P(X \leq x) = P(\frac{X-m}{\sigma} \leq \frac{x-m}{\sigma} ) $$ <br>
+Donc <br>
+$$\forall x \in \mathbf{R}  ~ \phi^{-1}(F(x))=\frac{1}{\sigma}x-\frac{m}{\sigma} $$ <br>
+ou $\phi$ est la fonction de répartion de la loi $\mathcal{N}(0,1)$
+
+ Donc le graphe de probabilites de loi normale est le nuage des points : <br>
+
+$$\{x_i^{*}, \phi^{-1}(\frac{i}{n}) \} ~ pour~ i\in \{1,2,3,...,n-1 \}$$ <br>
+
+
+```{r}
+qqnorm(x,pch=20,main="graphe de proba de la loi normale ")
+   
+```
+
+Le non alignement des points dans le graphe ci-dessus montre bien que la loi normalle  n'est pas un modèle plausible pour décrire les montants des sinistres. <br>
+
+Histogrammes pour la loi normale :<br>
+
+```{r}
+par(mfcol=c(1,2))
+hist(x,prob=T , breaks=bornes, main="histo de les montants des sinistres",xlim=c(0,5))
+plot(dnorm,main="densite de loi normal ",pch=20)
+
+```
+<br>
+l'histogramme donne une approximation de la densite de la  loi correspondante . <br>
+le graphe ci-dessus montre bien que la loi normale  n'est pas un modèle plausible pour décrire les montants des sinistres. 
+
+<br>
+
+
+### Question 2
+
+```{r}
+plot(ecdf(x))
+# la moyenne empiriqué
+moyenne <- mean(x) 
+moyenne 
+# la mediane empirique
+med<-median(x)
+med
+#le min est le max
+min(x)
+max(x)
+#"écart-type  empirique"
+sd<-sqrt((n-1)/n)*sd(x)
+sd
+cat("variance empirique")
+((n-1)/n)*var(x)
+cat("le coefficient de varaition empiriqué ")
+cv<-sd/moyenne
+cv
+
+
+```
+
+* 
+
+
+
+
+### question 3
+
+```{r}
+xt <-sort(x)
+plot(log(xt[1:n-1]),log(1-seq(1,n-1)/n),pch=20)
+```
+
+
+
+
+
+#### Partie2 :
+
+### Question 1 :
+
+```{r}
+# Pour simuler une loi de P(a,b) on simule la loi exp(a)
+simulation <- function(a,b,n)
+{
+  u <- runif(n,0,1) # on choisit une échantillon de [0,1] 
+  y <- -log(u)/a  # simulation d'une échantillon de taille de loi exp
+  x <- b*exp(y)   # 
+  
+  return(x) 
+}
+
+# Test de notre fonction 
+l<-simulation(1,2,10)
+l
+
+```
+
+### question 2 
+
+

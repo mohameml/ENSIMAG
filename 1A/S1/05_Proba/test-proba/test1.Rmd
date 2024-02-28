@@ -1,0 +1,316 @@
+---
+title: "Test1"
+author: "MOHAMEDAHMED-Mohmedlemine"
+date: "2022-10-15"
+output: html_document
+---
+Probleme1:
+
+on note A:"le candidat resuie a l'exman"
+
+on note pour tout i $\in$ {0,1....,10}
+ on note Mi="le candidat valide la matiere numero i"
+ 
+ donc: $P(A)=P(\bigcap_{i=1}^{10}Mi)$
+
+par l'independace des (Mi) on a $P(A)=\prod_{i=1}^{10}p(Mi)$
+
+donc $P(A)=\prod_{i=1}^{10}(1-q)=(1-0.02)^{10}$
+
+donc P(A)=0.817
+
+Question1:
+
+on note X: les nombres de candidants resuient a l'examen 
+
+on a X=$\sum_{i=1}^{n}1Ai$
+ou $1Ai=\begin{cases}1 & x \in Ai\\0 & si non\end{cases}$
+
+avec Ai="le candidat numero i resuit a l'exmaen "
+
+donc E(X)=E($\sum_{i=1}^{n}1Ai$)=($\sum_{i=1}^{n}E(1Ai)$)
+
+E(X)=$\sum_{i=1}^{n}P(Ai)$=n*(0.817)
+
+donc E(X)=240*0.817
+
+
+E(X)=196.08
+
+Probleme2:
+
+Question 2:
+
+ona N1 suit unre loi uniforme sur {1,2,3,4}
+
+et aussi N2 suit une loi uniforme sur {1,2,3,4}
+
+soit i $\in$ {1,2,3,4}
+
+P(N=i)=P(N2=i|N2>=N1)  d'aprezs laprocedure de rejet
+
+donc d'apres la formule de bayes :
+
+on a $P(N=i)=\frac{P(N2>=N1|N2=i)P(N2=i)}{\sum_{j=1}^{4}P(N2>=N1|N2=j)P(N2=j)}$
+P(N=i)=$\frac{P(N1<=i)P(N2=i)}{\sum_{j=1}^{4}P(N1<=j)P(N2=j)}$
+
+or pour tout j$\in$ {1,2,3,4} on a P(N1<=j)=$\frac{card(N1<=j)}{4}$=$\frac{j}{4}$
+
+donc P(N=i)=$\frac{i}{10}$
+
+
+donc P(N=1)=$\frac{1}{10}$,P(N=2)=$\frac{1}{5}$,P(N=3)=$\frac{3}{10}$
+P(N=4)=$\frac{2}{5}$
+
+Probleme3:
+
+Question3:
+
+
+pour tout i$\in${1,2,3,4} 
+
+on note Ci="le candidat choisit la porte numero i"
+
+Oi="le presenteur ouvre la porte i "
+
+Gi="la porte i est gangante"
+
+comme le presenteur n'ouvre la porte i que si elle est perdante et non choisi 
+par le candidat
+
+donc on a $Oi=(Gs\cup Gj)\cap(Cs\cup Cj)$ avec s,j$\in${1,2,3}\{i}
+
+on note A="le candidat gange apres avoir changer son avis "
+
+donc $P(A)=P(G3\cap O2 \cap C1)+P(G3\cap O1 \cap C2)+P(G2\cap O3 \cap C1)+P(G2\cap O1 \cap C3)+P(G1\cap O2 \cap C3)+P(G1\cap O3 \cap C2)$
+
+donc $P(A)=6P(G3\cap O2 \cap C1) or  G3\cap  C1 \subset O2=(G1\cup G3)\cap(C1\cup C3)$
+
+donc $P(A)=6P(G3\cap  C1)$
+
+$P(A)=6 \frac{1}{3} \frac{1}{3}$
+
+donc P(A)=$\frac{2}{3}$
+
+on note B="le candidat gange en conservant son avis"
+
+on trouve par le meme raisonement que la P(b)=$\frac{1}{3}$
+
+Question 4:
+
+on note C="le candidat change la porte "
+ on a la p(c)=$\frac{1}{3}$
+ 
+ et D="le candidat ne change pas la porte "
+ on a p(D)=$\frac{2}{3}$
+ 
+ d'apres la formule d bayes on a P(c|G)=$\frac{P(G|C)P(C)}{P(G|C)P(C)+P(G|D)P(D)}$
+ 
+ donc on a P(C|D)=$\frac{1}{2}$
+ 
+ Probleme4:
+ 
+ Question5:
+ 
+ la valeur mediane de X est $\frac{9}{13}$
+ 
+  Probleme5:
+  
+  Question6:
+  
+  soit n>=1 et t>0
+  
+  P(Zn>t)=P($\bigcap_{i=1}^{n}Xi>t$)=$\prod_{i=1}^{n}p(Xi>t)$=exp(-n$\mu$ t)
+ 
+$P(ZN>1)=\sum_{n=0}^{+\infty}P(ZN>1|N=n)P(N=n)=\sum_{n=0}^{+\infty}P(Zn>1)P(N=n)$
+
+$P(ZN>1)=\sum_{n=0}^{+\infty}exp(-n\mu)\frac{1}{en!}$
+
+donc $P(ZN>1)=exp(exp(-\mu)-1)$
+
+ Probleme6:
+ 
+  Question7:
+ 
+ 
+ Z suit une loi binomiale de paramètres ( $\frac{8}{9}$,20), son espérance vaut donc  
+ 
+ E[Z]=20∗ $\frac{8}{9}$=17.8
+ 
+ 
+  une relation entre Y,Z et X est:
+  Y=Z-X
+  
+ Question8:
+   
+Y suit une loi binomiale de paramètres ( $\frac{2}{9}$,20), son espérance vaut donc  
+
+E[Z]=20∗ $\frac{2}{9}$=4.4.
+
+
+ona $\pi(k,l)=\left(\begin{array}{c}l+k\\ l\end{array}\right)(\frac{2}{9})^{l}(\frac{7}{9})^{K}$
+
+on a E(Y|X=k)=$\sum_{n=1}^{20-k}n$$\pi$(k,n)
+
+Question9:
+
+E[XY]=( $\frac{2}{3}$)nE[X]−($\frac{2}{3}$)E[$X^{2}$]
+
+
+Question 10:
+
+on a V(Z)=20( $\frac{8}{9}$)( $\frac{1}{9}$)
+
+donc V(Z)=1.98
+
+Cov(X,Y)=$\frac{V(Z)−V(X)−V(Y)}{2}=−2.96$
+
+E(XY)=Cov(X,Y+E[X]E[Y]
+
+donc E(XY)=55.7
+
+FIN
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

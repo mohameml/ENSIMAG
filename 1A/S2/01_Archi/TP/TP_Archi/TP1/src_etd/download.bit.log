@@ -1,0 +1,828 @@
+
+****** Vivado v2019.1 (64-bit)
+  **** SW Build 2552052 on Fri May 24 14:47:09 MDT 2019
+  **** IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+    ** Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+
+source common/bitstream.vivado.tcl
+# set DEVICE         [lindex $argv 0]
+# set TOP            [lindex $argv 1]
+# set TARGET         [lindex $argv 2]
+# set ENABLE_MEM     [expr [lindex $argv 3]]
+# source common/read_prj.vivado.tcl
+## proc read_prj {filename} {
+## 	puts "Read $filename"
+## 
+## 	set fp [open $filename r]
+## 	set file_data [read $fp]
+## 	set lines [split $file_data "\n"]
+## 
+## 	foreach line $lines {
+## 		if {[regexp {(\w+)\s+(\w+)\s+\"(.+)\"}  ${line}  matched  fmt lib src]} {
+## 			puts "Read: $fmt $lib $src"
+## 			if {$fmt=="vhdl"} {
+## 				read_vhdl -library $lib $src
+## 			}
+## 		}
+## 	}
+## 
+## 	close $fp
+## }
+# read_prj ${TOP}.prj
+Read lfsrfpga.prj
+Read: vhdl work vhd/lfsrfpga.vhd
+Read: vhdl work vhd/lfsr.vhd
+Read: vhdl work vhd/basc_d.vhd
+Read: vhdl work vhd/div_freq.vhd
+Read: vhdl work vhd/tb_lfsr.vhd
+# read_xdc ${TOP}_${DEVICE}.xdc
+# auto_detect_xpm
+# synth_design -top ${TOP} -part ${DEVICE}
+Command: synth_design -top lfsrfpga -part xc7z010-clg400-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7z010'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z010'
+INFO: [Device 21-403] Loading part xc7z010clg400-1
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 78565 
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 1658.289 ; gain = 154.688 ; free physical = 22838 ; free virtual = 36850
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'lfsrfpga' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:10]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-638] synthesizing module 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:20]
+INFO: [Synth 8-3491] module 'basc_D' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/basc_d.vhd:4' bound to instance 'FD0' of component 'basc_D' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:42]
+INFO: [Synth 8-638] synthesizing module 'basc_D' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/basc_d.vhd:12]
+INFO: [Synth 8-256] done synthesizing module 'basc_D' (1#1) [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/basc_d.vhd:12]
+INFO: [Synth 8-256] done synthesizing module 'div_freq' (2#1) [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:20]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'div_freq' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/div_freq.vhd:9' bound to instance 'DivX' of component 'div_freq' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:34]
+INFO: [Synth 8-3491] module 'lfsr' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsr.vhd:8' bound to instance 'I_lfsr' of component 'lfsr' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:43]
+INFO: [Synth 8-638] synthesizing module 'lfsr' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsr.vhd:14]
+INFO: [Synth 8-3491] module 'basc_D' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/basc_d.vhd:4' bound to instance 'FD0' of component 'basc_D' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsr.vhd:29]
+INFO: [Synth 8-3491] module 'basc_D' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/basc_d.vhd:4' bound to instance 'FD1' of component 'basc_D' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsr.vhd:36]
+INFO: [Synth 8-3491] module 'basc_D' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/basc_d.vhd:4' bound to instance 'FD2' of component 'basc_D' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsr.vhd:43]
+INFO: [Synth 8-3491] module 'basc_D' declared at '/user/8/.base/mohameml/home/Desktop/src_etd/vhd/basc_d.vhd:4' bound to instance 'FD3' of component 'basc_D' [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsr.vhd:50]
+INFO: [Synth 8-256] done synthesizing module 'lfsr' (3#1) [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsr.vhd:14]
+INFO: [Synth 8-256] done synthesizing module 'lfsrfpga' (4#1) [/user/8/.base/mohameml/home/Desktop/src_etd/vhd/lfsrfpga.vhd:10]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 1712.039 ; gain = 208.438 ; free physical = 22859 ; free virtual = 36872
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1715.008 ; gain = 211.406 ; free physical = 22859 ; free virtual = 36872
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1715.008 ; gain = 211.406 ; free physical = 22859 ; free virtual = 36872
+---------------------------------------------------------------------------------
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [/user/8/.base/mohameml/home/Desktop/src_etd/lfsrfpga_xc7z010-clg400-1.xdc]
+Finished Parsing XDC File [/user/8/.base/mohameml/home/Desktop/src_etd/lfsrfpga_xc7z010-clg400-1.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/user/8/.base/mohameml/home/Desktop/src_etd/lfsrfpga_xc7z010-clg400-1.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/lfsrfpga_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/lfsrfpga_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1891.664 ; gain = 0.000 ; free physical = 22766 ; free virtual = 36778
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1891.664 ; gain = 0.000 ; free physical = 22764 ; free virtual = 36776
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:05 ; elapsed = 00:00:07 . Memory (MB): peak = 1891.664 ; gain = 388.062 ; free physical = 22832 ; free virtual = 36844
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7z010clg400-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:05 ; elapsed = 00:00:07 . Memory (MB): peak = 1891.664 ; gain = 388.062 ; free physical = 22832 ; free virtual = 36844
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:05 ; elapsed = 00:00:07 . Memory (MB): peak = 1891.664 ; gain = 388.062 ; free physical = 22832 ; free virtual = 36844
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1891.664 ; gain = 388.062 ; free physical = 22829 ; free virtual = 36842
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---XORs : 
+	   2 Input      1 Bit         XORs := 1     
++---Registers : 
+	                1 Bit    Registers := 30    
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+Hierarchical RTL Component report 
+Module basc_D 
+Detailed RTL Component Info : 
++---Registers : 
+	                1 Bit    Registers := 1     
+Module lfsr 
+Detailed RTL Component Info : 
++---XORs : 
+	   2 Input      1 Bit         XORs := 1     
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 80 (col length:40)
+BRAMs: 120 (col length: RAMB18 40 RAMB36 20)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+Warning: Parallel synthesis criteria is not met 
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:06 ; elapsed = 00:00:08 . Memory (MB): peak = 1891.664 ; gain = 388.062 ; free physical = 22816 ; free virtual = 36831
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:09 ; elapsed = 00:00:11 . Memory (MB): peak = 1891.664 ; gain = 388.062 ; free physical = 22691 ; free virtual = 36706
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:09 ; elapsed = 00:00:11 . Memory (MB): peak = 1891.664 ; gain = 388.062 ; free physical = 22691 ; free virtual = 36706
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:09 ; elapsed = 00:00:11 . Memory (MB): peak = 1891.664 ; gain = 388.062 ; free physical = 22683 ; free virtual = 36698
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+INFO: [Synth 8-5365] Flop I_lfsr/FD3/val_reg is being inverted and renamed to I_lfsr/FD3/val_reg_inv.
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 1891.664 ; gain = 388.062 ; free physical = 22683 ; free virtual = 36698
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 1891.664 ; gain = 388.062 ; free physical = 22683 ; free virtual = 36698
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 1891.664 ; gain = 388.062 ; free physical = 22683 ; free virtual = 36698
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 1891.664 ; gain = 388.062 ; free physical = 22683 ; free virtual = 36698
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 1891.664 ; gain = 388.062 ; free physical = 22683 ; free virtual = 36698
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 1891.664 ; gain = 388.062 ; free physical = 22683 ; free virtual = 36698
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+-----+------+
+|      |Cell |Count |
++------+-----+------+
+|1     |BUFG |     1|
+|2     |LUT1 |    26|
+|3     |LUT2 |     1|
+|4     |FDCE |    29|
+|5     |FDPE |     1|
+|6     |IBUF |     2|
+|7     |OBUF |     1|
++------+-----+------+
+
+Report Instance Areas: 
++------+---------------------+------------+------+
+|      |Instance             |Module      |Cells |
++------+---------------------+------------+------+
+|1     |top                  |            |    61|
+|2     |  \Horloge[0].DivX   |div_freq    |     2|
+|3     |    FD0              |basc_D_53   |     2|
+|4     |  \Horloge[10].DivX  |div_freq_0  |     2|
+|5     |    FD0              |basc_D_52   |     2|
+|6     |  \Horloge[11].DivX  |div_freq_1  |     2|
+|7     |    FD0              |basc_D_51   |     2|
+|8     |  \Horloge[12].DivX  |div_freq_2  |     2|
+|9     |    FD0              |basc_D_50   |     2|
+|10    |  \Horloge[13].DivX  |div_freq_3  |     2|
+|11    |    FD0              |basc_D_49   |     2|
+|12    |  \Horloge[14].DivX  |div_freq_4  |     2|
+|13    |    FD0              |basc_D_48   |     2|
+|14    |  \Horloge[15].DivX  |div_freq_5  |     2|
+|15    |    FD0              |basc_D_47   |     2|
+|16    |  \Horloge[16].DivX  |div_freq_6  |     2|
+|17    |    FD0              |basc_D_46   |     2|
+|18    |  \Horloge[17].DivX  |div_freq_7  |     2|
+|19    |    FD0              |basc_D_45   |     2|
+|20    |  \Horloge[18].DivX  |div_freq_8  |     2|
+|21    |    FD0              |basc_D_44   |     2|
+|22    |  \Horloge[19].DivX  |div_freq_9  |     2|
+|23    |    FD0              |basc_D_43   |     2|
+|24    |  \Horloge[1].DivX   |div_freq_10 |     2|
+|25    |    FD0              |basc_D_42   |     2|
+|26    |  \Horloge[20].DivX  |div_freq_11 |     2|
+|27    |    FD0              |basc_D_41   |     2|
+|28    |  \Horloge[21].DivX  |div_freq_12 |     2|
+|29    |    FD0              |basc_D_40   |     2|
+|30    |  \Horloge[22].DivX  |div_freq_13 |     2|
+|31    |    FD0              |basc_D_39   |     2|
+|32    |  \Horloge[23].DivX  |div_freq_14 |     2|
+|33    |    FD0              |basc_D_38   |     2|
+|34    |  \Horloge[24].DivX  |div_freq_15 |     2|
+|35    |    FD0              |basc_D_37   |     2|
+|36    |  \Horloge[25].DivX  |div_freq_16 |     2|
+|37    |    FD0              |basc_D_36   |     2|
+|38    |  \Horloge[2].DivX   |div_freq_17 |     2|
+|39    |    FD0              |basc_D_35   |     2|
+|40    |  \Horloge[3].DivX   |div_freq_18 |     2|
+|41    |    FD0              |basc_D_34   |     2|
+|42    |  \Horloge[4].DivX   |div_freq_19 |     2|
+|43    |    FD0              |basc_D_33   |     2|
+|44    |  \Horloge[5].DivX   |div_freq_20 |     2|
+|45    |    FD0              |basc_D_32   |     2|
+|46    |  \Horloge[6].DivX   |div_freq_21 |     2|
+|47    |    FD0              |basc_D_31   |     2|
+|48    |  \Horloge[7].DivX   |div_freq_22 |     2|
+|49    |    FD0              |basc_D_30   |     2|
+|50    |  \Horloge[8].DivX   |div_freq_23 |     2|
+|51    |    FD0              |basc_D_29   |     2|
+|52    |  \Horloge[9].DivX   |div_freq_24 |     2|
+|53    |    FD0              |basc_D_28   |     2|
+|54    |  I_lfsr             |lfsr        |     5|
+|55    |    FD0              |basc_D      |     1|
+|56    |    FD1              |basc_D_25   |     2|
+|57    |    FD2              |basc_D_26   |     1|
+|58    |    FD3              |basc_D_27   |     1|
++------+---------------------+------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 1891.664 ; gain = 388.062 ; free physical = 22683 ; free virtual = 36698
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:09 ; elapsed = 00:00:11 . Memory (MB): peak = 1891.664 ; gain = 211.406 ; free physical = 22748 ; free virtual = 36762
+Synthesis Optimization Complete : Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 1891.664 ; gain = 388.062 ; free physical = 22762 ; free virtual = 36776
+INFO: [Project 1-571] Translating synthesized netlist
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Parsing XDC File [/user/8/.base/mohameml/home/Desktop/src_etd/lfsrfpga_xc7z010-clg400-1.xdc]
+Finished Parsing XDC File [/user/8/.base/mohameml/home/Desktop/src_etd/lfsrfpga_xc7z010-clg400-1.xdc]
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1891.664 ; gain = 0.000 ; free physical = 22690 ; free virtual = 36705
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Common 17-83] Releasing license: Synthesis
+51 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 1891.664 ; gain = 495.523 ; free physical = 22776 ; free virtual = 36791
+# report_utilization -file ${TOP}_utilization.rpt
+# report_timing_summary -file ${TOP}_timing.rpt
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 8 CPUs
+# get_ports *
+# set filename "${TOP}_summary.rpt"
+# set fileId [open $filename "w"]
+# if { [get_clocks] != "" } {
+# 	puts -nonewline $fileId "Clock  | " 
+# 	puts $fileId [get_property -min PERIOD [get_clocks]];
+# 	puts -nonewline $fileId "Slack  | "
+# 	puts $fileId [get_property SLACK [get_timing_paths]];
+# }
+# close $fileId
+# opt_design
+Command: opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z010'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z010'
+Running DRC as a precondition to command opt_design
+
+Starting DRC Task
+INFO: [DRC 23-27] Running DRC with 8 threads
+INFO: [Project 1-461] DRC finished with 0 Errors
+INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
+
+Time (s): cpu = 00:00:00.92 ; elapsed = 00:00:00.97 . Memory (MB): peak = 2356.668 ; gain = 173.031 ; free physical = 22463 ; free virtual = 36479
+
+Starting Cache Timing Information Task
+Ending Cache Timing Information Task | Checksum: 1217cd60c
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2356.668 ; gain = 0.000 ; free physical = 22463 ; free virtual = 36478
+
+Starting Logic Optimization Task
+
+Phase 1 Retarget
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Opt 31-49] Retargeted 0 cell(s).
+Phase 1 Retarget | Checksum: 1217cd60c
+
+Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2356.668 ; gain = 0.000 ; free physical = 22378 ; free virtual = 36393
+INFO: [Opt 31-389] Phase Retarget created 0 cells and removed 0 cells
+
+Phase 2 Constant propagation
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Phase 2 Constant propagation | Checksum: 1217cd60c
+
+Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2356.668 ; gain = 0.000 ; free physical = 22378 ; free virtual = 36393
+INFO: [Opt 31-389] Phase Constant propagation created 0 cells and removed 0 cells
+
+Phase 3 Sweep
+Phase 3 Sweep | Checksum: 166d78b19
+
+Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2356.668 ; gain = 0.000 ; free physical = 22378 ; free virtual = 36393
+INFO: [Opt 31-389] Phase Sweep created 1 cells and removed 0 cells
+
+Phase 4 BUFG optimization
+Phase 4 BUFG optimization | Checksum: 166d78b19
+
+Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2356.668 ; gain = 0.000 ; free physical = 22378 ; free virtual = 36393
+INFO: [Opt 31-662] Phase BUFG optimization created 0 cells of which 0 are BUFGs and removed 0 cells.
+
+Phase 5 Shift Register Optimization
+INFO: [Opt 31-1064] SRL Remap converted 0 SRLs to 0 registers and converted 0 registers of register chains to 0 SRLs
+Phase 5 Shift Register Optimization | Checksum: 166d78b19
+
+Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.02 . Memory (MB): peak = 2356.668 ; gain = 0.000 ; free physical = 22378 ; free virtual = 36393
+INFO: [Opt 31-389] Phase Shift Register Optimization created 0 cells and removed 0 cells
+
+Phase 6 Post Processing Netlist
+Phase 6 Post Processing Netlist | Checksum: 107785713
+
+Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.02 . Memory (MB): peak = 2356.668 ; gain = 0.000 ; free physical = 22378 ; free virtual = 36393
+INFO: [Opt 31-389] Phase Post Processing Netlist created 0 cells and removed 0 cells
+Opt_design Change Summary
+=========================
+
+
+-------------------------------------------------------------------------------------------------------------------------
+|  Phase                        |  #Cells created  |  #Cells Removed  |  #Constrained objects preventing optimizations  |
+-------------------------------------------------------------------------------------------------------------------------
+|  Retarget                     |               0  |               0  |                                              0  |
+|  Constant propagation         |               0  |               0  |                                              0  |
+|  Sweep                        |               1  |               0  |                                              0  |
+|  BUFG optimization            |               0  |               0  |                                              0  |
+|  Shift Register Optimization  |               0  |               0  |                                              0  |
+|  Post Processing Netlist      |               0  |               0  |                                              0  |
+-------------------------------------------------------------------------------------------------------------------------
+
+
+
+Starting Connectivity Check Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2356.668 ; gain = 0.000 ; free physical = 22378 ; free virtual = 36393
+Ending Logic Optimization Task | Checksum: 1a26bc2fc
+
+Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.02 . Memory (MB): peak = 2356.668 ; gain = 0.000 ; free physical = 22378 ; free virtual = 36393
+
+Starting Power Optimization Task
+INFO: [Pwropt 34-132] Skipping clock gating for clocks with a period < 2.00 ns.
+Ending Power Optimization Task | Checksum: 1a26bc2fc
+
+Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.02 . Memory (MB): peak = 2356.668 ; gain = 0.000 ; free physical = 22376 ; free virtual = 36392
+
+Starting Final Cleanup Task
+Ending Final Cleanup Task | Checksum: 1a26bc2fc
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2356.668 ; gain = 0.000 ; free physical = 22376 ; free virtual = 36392
+
+Starting Netlist Obfuscation Task
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2356.668 ; gain = 0.000 ; free physical = 22376 ; free virtual = 36392
+Ending Netlist Obfuscation Task | Checksum: 1a26bc2fc
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2356.668 ; gain = 0.000 ; free physical = 22376 ; free virtual = 36392
+INFO: [Common 17-83] Releasing license: Implementation
+16 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+opt_design completed successfully
+# place_design -directive Quick
+Command: place_design -directive Quick
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z010'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z010'
+INFO: [DRC 23-27] Running DRC with 8 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+Running DRC as a precondition to command place_design
+INFO: [DRC 23-27] Running DRC with 8 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+
+Starting Placer Task
+INFO: [Place 46-5] The placer was invoked with the 'Quick' directive.
+INFO: [Place 30-611] Multithreading enabled for place_design using a maximum of 8 CPUs
+
+Phase 1 Placer Initialization
+
+Phase 1.1 Placer Initialization Netlist Sorting
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2356.668 ; gain = 0.000 ; free physical = 22366 ; free virtual = 36381
+Phase 1.1 Placer Initialization Netlist Sorting | Checksum: ea7ca13f
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.03 . Memory (MB): peak = 2356.668 ; gain = 0.000 ; free physical = 22366 ; free virtual = 36381
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2356.668 ; gain = 0.000 ; free physical = 22366 ; free virtual = 36381
+
+Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device
+Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device | Checksum: 12d89463c
+
+Time (s): cpu = 00:00:00.19 ; elapsed = 00:00:00.07 . Memory (MB): peak = 2380.680 ; gain = 24.012 ; free physical = 22366 ; free virtual = 36383
+
+Phase 1.3 Build Placer Netlist Model
+Phase 1.3 Build Placer Netlist Model | Checksum: 1ca275f3d
+
+Time (s): cpu = 00:00:00.28 ; elapsed = 00:00:00.09 . Memory (MB): peak = 2380.680 ; gain = 24.012 ; free physical = 22366 ; free virtual = 36383
+
+Phase 1.4 Constrain Clocks/Macros
+Phase 1.4 Constrain Clocks/Macros | Checksum: 1ca275f3d
+
+Time (s): cpu = 00:00:00.28 ; elapsed = 00:00:00.09 . Memory (MB): peak = 2380.680 ; gain = 24.012 ; free physical = 22366 ; free virtual = 36383
+Phase 1 Placer Initialization | Checksum: 1ca275f3d
+
+Time (s): cpu = 00:00:00.28 ; elapsed = 00:00:00.09 . Memory (MB): peak = 2380.680 ; gain = 24.012 ; free physical = 22366 ; free virtual = 36383
+
+Phase 2 Global Placement
+
+Phase 2.1 Floorplanning
+Phase 2.1 Floorplanning | Checksum: 1ca275f3d
+
+Time (s): cpu = 00:00:00.28 ; elapsed = 00:00:00.09 . Memory (MB): peak = 2380.680 ; gain = 24.012 ; free physical = 22366 ; free virtual = 36383
+
+Phase 2.2 Global Placement Core
+Phase 2.2 Global Placement Core | Checksum: 1779092d0
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.27 . Memory (MB): peak = 2412.695 ; gain = 56.027 ; free physical = 22345 ; free virtual = 36362
+Phase 2 Global Placement | Checksum: 1779092d0
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.27 . Memory (MB): peak = 2412.695 ; gain = 56.027 ; free physical = 22345 ; free virtual = 36362
+
+Phase 3 Detail Placement
+
+Phase 3.1 Commit Multi Column Macros
+Phase 3.1 Commit Multi Column Macros | Checksum: 1779092d0
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.27 . Memory (MB): peak = 2412.695 ; gain = 56.027 ; free physical = 22345 ; free virtual = 36362
+
+Phase 3.2 Commit Most Macros & LUTRAMs
+Phase 3.2 Commit Most Macros & LUTRAMs | Checksum: 1fcf52f5c
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.27 . Memory (MB): peak = 2412.695 ; gain = 56.027 ; free physical = 22345 ; free virtual = 36362
+
+Phase 3.3 Area Swap Optimization
+Phase 3.3 Area Swap Optimization | Checksum: 20cd9a82c
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.27 . Memory (MB): peak = 2412.695 ; gain = 56.027 ; free physical = 22345 ; free virtual = 36362
+
+Phase 3.4 Pipeline Register Optimization
+Phase 3.4 Pipeline Register Optimization | Checksum: 20cd9a82c
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.28 . Memory (MB): peak = 2412.695 ; gain = 56.027 ; free physical = 22345 ; free virtual = 36362
+
+Phase 3.5 Small Shape Detail Placement
+Phase 3.5 Small Shape Detail Placement | Checksum: 1528fa56d
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.47 . Memory (MB): peak = 2412.695 ; gain = 56.027 ; free physical = 22345 ; free virtual = 36363
+
+Phase 3.6 Re-assign LUT pins
+Phase 3.6 Re-assign LUT pins | Checksum: 1528fa56d
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.47 . Memory (MB): peak = 2412.695 ; gain = 56.027 ; free physical = 22345 ; free virtual = 36363
+
+Phase 3.7 Pipeline Register Optimization
+Phase 3.7 Pipeline Register Optimization | Checksum: 1528fa56d
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.47 . Memory (MB): peak = 2412.695 ; gain = 56.027 ; free physical = 22345 ; free virtual = 36363
+Phase 3 Detail Placement | Checksum: 1528fa56d
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.47 . Memory (MB): peak = 2412.695 ; gain = 56.027 ; free physical = 22345 ; free virtual = 36363
+
+Phase 4 Post Placement Optimization and Clean-Up
+
+Phase 4.1 Post Commit Optimization
+Phase 4.1 Post Commit Optimization | Checksum: 1528fa56d
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.47 . Memory (MB): peak = 2412.695 ; gain = 56.027 ; free physical = 22345 ; free virtual = 36363
+
+Phase 4.2 Post Placement Cleanup
+Phase 4.2 Post Placement Cleanup | Checksum: 1528fa56d
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.47 . Memory (MB): peak = 2412.695 ; gain = 56.027 ; free physical = 22345 ; free virtual = 36363
+
+Phase 4.3 Placer Reporting
+Phase 4.3 Placer Reporting | Checksum: 1528fa56d
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.47 . Memory (MB): peak = 2412.695 ; gain = 56.027 ; free physical = 22345 ; free virtual = 36363
+
+Phase 4.4 Final Placement Cleanup
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2412.695 ; gain = 0.000 ; free physical = 22345 ; free virtual = 36363
+Phase 4.4 Final Placement Cleanup | Checksum: 169385373
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.48 . Memory (MB): peak = 2412.695 ; gain = 56.027 ; free physical = 22345 ; free virtual = 36363
+Phase 4 Post Placement Optimization and Clean-Up | Checksum: 169385373
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.48 . Memory (MB): peak = 2412.695 ; gain = 56.027 ; free physical = 22345 ; free virtual = 36363
+Ending Placer Task | Checksum: f56b9dcb
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.48 . Memory (MB): peak = 2412.695 ; gain = 56.027 ; free physical = 22345 ; free virtual = 36363
+INFO: [Common 17-83] Releasing license: Implementation
+10 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+place_design completed successfully
+# route_design -directive Quick -ultrathreads
+Command: route_design -directive Quick -ultrathreads
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z010'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z010'
+Running DRC as a precondition to command route_design
+INFO: [DRC 23-27] Running DRC with 8 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+
+
+Starting Routing Task
+INFO: [Route 35-270] Using Router directive 'Quick'.
+INFO: [Route 35-254] Multithreading enabled for route_design using a maximum of 8 CPUs
+WARNING: [Route 72-1] Router was invoked with -ultrathreads option. Results may not be repeatable.
+Checksum: PlaceDB: 1e811907 ConstDB: 0 ShapeSum: d6ea84c4 RouteDB: 0
+
+Phase 1 Build RT Design
+Phase 1 Build RT Design | Checksum: 73a2dd5e
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 2428.574 ; gain = 0.000 ; free physical = 22301 ; free virtual = 36319
+Post Restoration Checksum: NetGraph: 57b1840b NumContArr: 1bf15953 Constraints: 0 Timing: 0
+
+Phase 2 Router Initialization
+
+Phase 2.1 Fix Topology Constraints
+Phase 2.1 Fix Topology Constraints | Checksum: 73a2dd5e
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 2428.574 ; gain = 0.000 ; free physical = 22276 ; free virtual = 36293
+
+Phase 2.2 Pre Route Cleanup
+Phase 2.2 Pre Route Cleanup | Checksum: 73a2dd5e
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 2428.574 ; gain = 0.000 ; free physical = 22276 ; free virtual = 36293
+ Number of Nodes with overlaps = 0
+Phase 2 Router Initialization | Checksum: 1b370b8c6
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 2428.574 ; gain = 0.000 ; free physical = 22272 ; free virtual = 36290
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 0 %
+  Global Horizontal Routing Utilization  = 0 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 32
+    (Failed Nets is the sum of unrouted and partially routed nets)
+  Number of Unrouted Nets             = 32
+  Number of Partially Routed Nets     = 0
+  Number of Node Overlaps             = 0
+
+
+Phase 3 Initial Routing
+Phase 3 Initial Routing | Checksum: 15567badf
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 2428.574 ; gain = 0.000 ; free physical = 22271 ; free virtual = 36289
+
+Phase 4 Rip-up And Reroute
+
+Phase 4.1 Global Iteration 0
+ Number of Nodes with overlaps = 0
+Phase 4.1 Global Iteration 0 | Checksum: 10111e98c
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 2428.574 ; gain = 0.000 ; free physical = 22271 ; free virtual = 36289
+Phase 4 Rip-up And Reroute | Checksum: 10111e98c
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 2428.574 ; gain = 0.000 ; free physical = 22271 ; free virtual = 36289
+
+Phase 5 Delay and Skew Optimization
+Phase 5 Delay and Skew Optimization | Checksum: 10111e98c
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 2428.574 ; gain = 0.000 ; free physical = 22271 ; free virtual = 36289
+
+Phase 6 Post Hold Fix
+
+Phase 6.1 Hold Fix Iter
+Phase 6.1 Hold Fix Iter | Checksum: 10111e98c
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 2428.574 ; gain = 0.000 ; free physical = 22271 ; free virtual = 36289
+Phase 6 Post Hold Fix | Checksum: 10111e98c
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 2428.574 ; gain = 0.000 ; free physical = 22271 ; free virtual = 36289
+
+Phase 7 Route finalize
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 0.00999437 %
+  Global Horizontal Routing Utilization  = 0.00919118 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 0
+    (Failed Nets is the sum of unrouted and partially routed nets)
+  Number of Unrouted Nets             = 0
+  Number of Partially Routed Nets     = 0
+  Number of Node Overlaps             = 0
+
+Congestion Report
+North Dir 1x1 Area, Max Cong = 0.900901%, No Congested Regions.
+South Dir 1x1 Area, Max Cong = 6.30631%, No Congested Regions.
+East Dir 1x1 Area, Max Cong = 2.94118%, No Congested Regions.
+West Dir 1x1 Area, Max Cong = 4.41176%, No Congested Regions.
+
+------------------------------
+Reporting congestion hotspots
+------------------------------
+Direction: North
+----------------
+Congested clusters found at Level 0
+Effective congestion level: 0 Aspect Ratio: 1 Sparse Ratio: 0
+Direction: South
+----------------
+Congested clusters found at Level 0
+Effective congestion level: 0 Aspect Ratio: 1 Sparse Ratio: 0
+Direction: East
+----------------
+Congested clusters found at Level 0
+Effective congestion level: 0 Aspect Ratio: 1 Sparse Ratio: 0
+Direction: West
+----------------
+Congested clusters found at Level 0
+Effective congestion level: 0 Aspect Ratio: 1 Sparse Ratio: 0
+
+Phase 7 Route finalize | Checksum: 10111e98c
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 2428.574 ; gain = 0.000 ; free physical = 22271 ; free virtual = 36289
+
+Phase 8 Verifying routed nets
+
+ Verification completed successfully
+Phase 8 Verifying routed nets | Checksum: 10111e98c
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 2428.574 ; gain = 0.000 ; free physical = 22271 ; free virtual = 36289
+
+Phase 9 Depositing Routes
+Phase 9 Depositing Routes | Checksum: 1a575bed4
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 2428.574 ; gain = 0.000 ; free physical = 22271 ; free virtual = 36289
+INFO: [Route 35-16] Router Completed Successfully
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 2428.574 ; gain = 0.000 ; free physical = 22299 ; free virtual = 36317
+
+Routing Is Done.
+INFO: [Common 17-83] Releasing license: Implementation
+8 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
+route_design completed successfully
+# write_checkpoint -force route_design.dcp
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2428.574 ; gain = 0.000 ; free physical = 22299 ; free virtual = 36317
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Writing placer database...
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Write XDEF Complete: Time (s): cpu = 00:00:00.06 ; elapsed = 00:00:00.03 . Memory (MB): peak = 2428.574 ; gain = 0.000 ; free physical = 22294 ; free virtual = 36314
+INFO: [Common 17-1381] The checkpoint '/user/8/.base/mohameml/home/Desktop/src_etd/route_design.dcp' has been generated.
+# if { ${ENABLE_MEM} } {
+#     # Generate MMI map
+#     set MMI_FILE ${TOP}.mmi
+#     write_mem_info -force ${MMI_FILE}
+# }
+# write_bitstream -force ${TARGET}
+Command: write_bitstream -force download.bit
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z010'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z010'
+Running DRC as a precondition to command write_bitstream
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/bigsoft/Xilinx/Vivado/2019.1/data/ip'.
+INFO: [DRC 23-27] Running DRC with 8 threads
+WARNING: [DRC ZPS7-1] PS7 block required: The PS7 cell must be used in this Zynq design in order to enable correct default configuration.
+INFO: [Vivado 12-3199] DRC finished with 0 Errors, 1 Warnings
+INFO: [Vivado 12-3200] Please refer to the DRC report (report_drc) for more information.
+INFO: [Designutils 20-2272] Running write_bitstream with 8 threads.
+Loading data files...
+Loading site data...
+Loading route data...
+Processing options...
+Creating bitmap...
+Creating bitstream...
+Writing bitstream ./download.bit...
+INFO: [Vivado 12-1842] Bitgen Completed Successfully.
+INFO: [Project 1-120] WebTalk data collection is mandatory when using a WebPACK part without a full Vivado license. To see the specific WebTalk data collected for your design, open the usage_statistics_webtalk.html or usage_statistics_webtalk.xml file in the implementation directory.
+INFO: [Common 17-186] '/user/8/.base/mohameml/home/Desktop/src_etd/usage_statistics_webtalk.xml' has been successfully sent to Xilinx on Fri Jan 20 17:37:20 2023. For additional details about this file, please refer to the WebTalk help file at /bigsoft/Xilinx/Vivado/2019.1/doc/webtalk_introduction.html.
+INFO: [Common 17-83] Releasing license: Implementation
+12 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
+write_bitstream completed successfully
+write_bitstream: Time (s): cpu = 00:00:07 ; elapsed = 00:00:11 . Memory (MB): peak = 2705.566 ; gain = 276.992 ; free physical = 22269 ; free virtual = 36287
+# exit
+INFO: [Common 17-206] Exiting Vivado at Fri Jan 20 17:37:20 2023...

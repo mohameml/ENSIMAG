@@ -1,0 +1,100 @@
+/*
+
+Xilinx xsim v2019.1 (64-bit) [Major: 2019, Minor: 1]
+SW Build: 2552052 on Fri May 24 14:47:09 MDT 2019
+IP Build: 2548770 on Fri May 24 18:01:18 MDT 2019
+
+Process ID (PID): 64832
+License: Customer
+
+Current time: 	Tue Feb 28 15:22:54 CET 2023
+Time zone: 	Central European Standard Time (Europe/Paris)
+
+OS: Ubuntu
+OS Version: 5.19.0-32-generic
+OS Architecture: amd64
+Available processors (cores): 12
+
+Display: :1
+Screen size: 1920x1080
+Screen resolution (DPI): 100
+Available screens: 1
+Available disk space: 13 GB
+Default font: family=Dialog,name=Dialog,style=plain,size=12
+
+Java version: 	9.0.4 64-bit
+Java home: 	/bigsoft/Xilinx/Vivado/2019.1/tps/lnx64/jre9.0.4
+Java executable location: 	/bigsoft/Xilinx/Vivado/2019.1/tps/lnx64/jre9.0.4/bin/java
+Java initial memory (-Xms): 	128 MB
+Java maximum memory (-Xmx):	 3 GB
+
+
+User name: 	mohameml
+User home directory: /user/8/.base/mohameml/home
+User working directory: /user/8/.base/mohameml/home/Desktop/Archi/TP5/src_etd
+User country: 	US
+User language: 	en
+User locale: 	en_US
+
+RDI_BASEROOT: /bigsoft/Xilinx/Vivado
+HDI_APPROOT: /bigsoft/Xilinx/Vivado/2019.1
+RDI_DATADIR: /bigsoft/Xilinx/Vivado/2019.1/data
+RDI_BINDIR: /bigsoft/Xilinx/Vivado/2019.1/bin
+
+Vivado preferences file location: /user/8/mohameml/.Xilinx/xsim/2019.1/vivado.xml
+Vivado preferences directory: /user/8/mohameml/.Xilinx/xsim/2019.1/
+Vivado layouts directory: /user/8/.base/mohameml/home/.Xilinx/xsim/2019.1/layouts
+PlanAhead jar file location: 	/bigsoft/Xilinx/Vivado/2019.1/lib/classes/planAhead.jar
+Vivado log file location: 	
+Vivado journal file location: 	/user/8/.base/mohameml/home/Desktop/Archi/TP5/src_etd/xsim.jou
+Engine tmp dir: 	./.Xil/xsim-64832-ensipc330
+
+Xilinx Environment Variables
+----------------------------
+XILINX: /bigsoft/Xilinx/Vivado/2019.1/ids_lite/ISE
+XILINX_DSP: /bigsoft/Xilinx/Vivado/2019.1/ids_lite/ISE
+XILINX_PLANAHEAD: /bigsoft/Xilinx/Vivado/2019.1
+XILINX_SDK: /bigsoft/Xilinx/SDK/2019.1
+XILINX_VIVADO: /bigsoft/Xilinx/Vivado/2019.1
+
+
+GUI allocated memory:	384 MB
+GUI max memory:		3,072 MB
+Engine allocated memory: 1,181 MB
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+
+*/
+
+// TclEventType: START_GUI
+// TclEventType: START_PROGRESS_DIALOG
+// Tcl Message: start_gui 
+// TclEventType: START_PROGRESS_DIALOG
+// by (cl):  Sourcing Tcl script 'xsim.dir/work.tb_system/xsim_script.tcl' : addNotify
+// Tcl Message: source xsim.dir/work.tb_system/xsim_script.tcl 
+// Tcl Message: # set_param project.enableReportConfiguration 0 
+// TclEventType: LOAD_FEATURE
+// TclEventType: DEBUG_PROBE_SET_CHANGE
+// Tcl Message: # load_feature core # current_fileset 
+// TclEventType: FILE_SET_NEW
+// TclEventType: RUN_ADD
+// TclEventType: RUN_CURRENT
+// TclEventType: PROJECT_DASHBOARD_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_NEW
+// [GUI Memory]: 74 MB (+74963kb) [00:00:04]
+// [Engine Memory]: 1,118 MB (+1020471kb) [00:00:04]
+// [GUI Memory]: 99 MB (+22935kb) [00:00:05]
+// [GUI Memory]: 111 MB (+6724kb) [00:00:05]
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1704] No user IP repositories specified INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/bigsoft/Xilinx/Vivado/2019.1/data/ip'. 
+// Tcl Message: # xsim {work.tb_system} -wdb {tb_system_isim_beh.wdb} -view {{magic.wcfg}} -tclbatch {common/run.tcl} 
+// Tcl Message: Vivado Simulator 2019.1 

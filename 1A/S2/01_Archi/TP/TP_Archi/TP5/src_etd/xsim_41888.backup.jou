@@ -1,0 +1,27 @@
+#-----------------------------------------------------------
+# xsim v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:47:09 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Tue Feb 28 14:38:53 2023
+# Process ID: 41888
+# Current directory: /user/8/.base/mohameml/home/Desktop/Archi/TP5/src_etd
+# Command line: xsim -nolog -source {xsim.dir/work.tb_system/xsim_script.tcl}
+# Log file: 
+# Journal file: /user/8/.base/mohameml/home/Desktop/Archi/TP5/src_etd/xsim.jou
+#-----------------------------------------------------------
+start_gui
+source xsim.dir/work.tb_system/xsim_script.tcl
+source common/run.tcl
+restart
+run 10 us
+restart
+run 10 us
+save_wave_config {/user/8/.base/mohameml/home/Desktop/Archi/TP5/src_etd/magic.wcfg}
+add_files -fileset sim_1 -norecurse /user/8/.base/mohameml/home/Desktop/Archi/TP5/src_etd/magic.wcfg
+set_property xsim.view /user/8/.base/mohameml/home/Desktop/Archi/TP5/src_etd/magic.wcfg [get_filesets sim_1]
+restart
+run 10 us
+save_wave_config {/user/8/.base/mohameml/home/Desktop/Archi/TP5/src_etd/magic.wcfg}
+restart
+run 10 us
+close_sim
