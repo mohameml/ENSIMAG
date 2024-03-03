@@ -1,0 +1,28 @@
+----- 
+pour explique la rentabilité du projet :
+	
+on va parlez de 2 chauses :
+	
+- le depanse  :
+	
+	- on achete des capteures , catres programmable .
+	
+	- et on le programme en utilsant des modéleds de l'IA  -> on a une équipe  qui gére sa 
+
+- la nrentabilité du projet  : 
+
+
+1. **Frais d'Abonnement :**
+   - Les restaurants paient des frais d'abonnement mensuels .
+   - Ceci  offre une source de revenus stable et prévisible.
+
+2. **Frais Basés sur l'Utilisation :**
+   - Nous facturons aux restaurants en fonction du volume de nourriture optimisé par notre solution. Cela garantit que les frais sont directement liés aux économies réalisées par le restaurant.
+	
+
+3. **Intégration avec les Systèmes Externes :**
+   - Nous facturons des frais supplémentaires pour des fonctionnalités avancées, telles que l'intégration avec d'autres systèmes de gestion des restaurants ou des analyses de données personnalisées.	
+
+
+
+
