@@ -1,0 +1,78 @@
+####################################
+# README : TP ACVL
+#
+# Simulation d'un Jeu boursier
+#
+# Ruimy Benjamin
+# Ibakuyumcu Arnaud
+# Voong Kwan
+# Rattanatray Ayutaya
+#
+# ENSIMAG
+#
+# 11 Avril 2016
+#
+###################################
+
+******* Partie Makefile
+
+*) Compiler le projet (documentation + source)
+	
+	make
+
+*) Jouer au Jeu
+
+	make play
+
+*) Lire la documentation
+
+	make doc
+
+	-> Possibilité de rajouter l'option OPEN=name_application
+	   où name_application correspond au nom d'une application ouvrant un html
+	   Par défaut, OPEN=firefox
+
+	   Exemple pour MAC : make doc OPEN=open
+
+*) Nettoyer les objets créés
+
+	make clean
+
+************************************
+
+******* Partie arborescence du projet
+
+=> bin/     : Contient les fichiers créés lors d'un make
+            : Se vide lors d'un make clean
+
+=> docu/    : Contient la documentation par Doxygen du code
+            : make doc permet de lire cette documentation
+              (se réferrer plus haut)
+
+=> lib/     : Contient ojdbc7.jar, la librairie java
+              nécessaire pour utiliser la base de donnée
+
+=> ressources/ : Contient le sujet ainsi que les documentations
+                 demandées
+
+=> src/     : Contient les sources java du jeu de simulation
+              (voir plus bas)
+
+************************************
+
+******* Partie arborescence de src/
+
+Structure MVC
+
+=> Controleur/  : Controleur du modele-vue
+=> Modele/      : Contient tous les modeles du jeu
+=> Utilitaires/ : Contient la simulation des cours
+                  + la partie base de donnée
+=> Vue/         : Contient tout l'interface graphique
+=> Jeu.java     : main du jeu
+
+************************************
+
+******* Document a rendre 
+
+Les documents à rendre sont dans le dossier documentARendre

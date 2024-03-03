@@ -1,0 +1,64 @@
+##################################
+#           
+# TP4 : Patron et STL
+#
+# Ibakuyumcu       Lebit
+# Arnaud           Benjamin
+#
+##################################
+##################################
+#
+# 1) Descriptif du TP4 : 
+#
+# 	Utilisation des patrons et 
+#	des fonctionnalités STL
+#
+##################################
+#
+# 2) Utilisation du Makefile :
+#
+# 	- all   : Compile le projet (Doc et sources)
+# 	- check : Lance les test par defaut ( voir 3))
+#	- analyse : Lance l'analyse de la complexité temporelle
+# 	- doc   : Lance la documentation
+# 	- clean : Nettoie les fichiers compilés
+# 	- help  : Lance l'aide du makefile
+#
+#	Possibilité de préciser le navigateur
+#	avec un OPEN=NomNav (par défault firefox)
+#
+# Exemple : make doc OPEN=open (pour Mac)
+#
+##################################
+#
+# 3) Utilisation des tests
+#
+# ** L'utilisation des assert permet de vraiment
+# justifier les test ! (voir src/test_*.cpp)
+#
+##################################
+#
+# 4) Arborescence du dossier :
+#
+# 	-src/ : Contient les sources
+# 		et les tests en cpp et
+# 		des fichiers tests 
+# 	-doc/ : Contient la documentation
+# 		doxygen 
+# 	-bin/ : Contient les binaires
+# 		lors de la compilation
+#	-DATfile/ : Contient les fichiers.dat
+#
+##################################
+#
+# 5) Un changement de nom des dossiers
+#    doit induire un changement dans
+#    le fichier docu/Doxyfile
+#
+#    OUTPUT_DIRECTORY = new value of DOCU_DIR
+#    INPUT = new value of SRC_DIR 
+#
+#    Ainsi qu'un changement de valeur
+#     des variables du Makefile général
+#
+##################################

@@ -1,0 +1,87 @@
+##################################
+#           
+# TP2 : Surcharge d'opérateurs
+#
+# Ibakuyumcu       Lebit
+# Arnaud           Benjamin
+#
+##################################
+#
+# REMARQUE : 
+#
+#	Nous avons enlevé les affichages
+#	de message lors de la création
+#	et destruction de Dvector
+#	pour éviter de poluer les tests
+#
+#	Il suffit de les décommenter
+#	dans Dvector.cpp
+#
+##################################
+#
+# 1) Descriptif du TP2 : 
+#
+# 	Implementation des opérateurs
+# 	classiques de la classe
+# 	* Dvector *
+#
+##################################
+#
+# 2) Utilisation du Makefile :
+#
+# 	- all   : Compile le projet (Doc et sources)
+# 	- check : Lance le test par defaut ( voir 3))
+# 	- doc   : Lance la documentation
+# 	- clean : Nettoie les fichiers compilés
+# 	- help  : Lance l'aide du makefile
+#
+#	Possibilité de préciser le navigateur
+#	avec un OPEN=NomNav (par défault firefox)
+#
+# Exemple : make doc OPEN=open (pour Mac)
+#
+##################################
+#
+# 3) Utilisation du test testOperator
+#
+# L'utilisation des assert permet de vraiment
+# justifier le test ! (voir src/main.cpp)
+#
+# 	./testOperator [argument]
+#
+# 	if argument =  
+# 		Lance le test par défaut
+# 		sur les opérateurs de la
+# 		classe Dvector
+# 	else argument = file.txt
+#		Lance le test sur le fichier
+#		file.txt contenant la valeur
+#		d'un vecteur de double
+#
+# exemple : $bin/testDvector src/fichierTest/simple_test.txt
+#
+##################################
+#
+# 4) Arborescence du dossier :
+#
+# 	-src/ : Contient les sources
+# 		et les tests en cpp et
+# 		des fichiers tests
+# 	-doc/ : Contient la documentation
+# 		doxygen 
+# 	-bin/ : Contient les binaires
+# 		lors de la compilation
+#
+##################################
+#
+# 5) Un changement de nom des dossiers
+#    doit induire un changement dans
+#    le fichier docu/Doxyfile
+#
+#    OUTPUT_DIRECTORY = new value of DOCU_DIR
+#    INPUT = new value of SRC_DIR 
+#
+#    Ainsi qu'un changement de valeur
+#     des variables du Makefile
+#
+##################################

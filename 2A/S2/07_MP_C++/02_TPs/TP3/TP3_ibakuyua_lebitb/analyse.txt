@@ -1,0 +1,114 @@
+############################
+#
+# analyse.txt
+#
+# Réponses aux questions de la
+# phase Analyse du TP3
+#
+# Valgrind sur les tests par défaut
+# en bas de page
+#
+# ibakuyua
+# lebitb
+#
+# ENSIMAG 23 Février 2016
+#
+############################
+
+-Utilisation des inline pour : 
+
+	toutes les méthodes et fonctions qui font un return direct dans chacune des classes
+
+-Astuce et remarques : 
+
+  **Dmatrix   -> Ajout d'une méthode matDisplay pour display en vue matricielle
+
+	      -> Utilisation des méthodes de la classe mère pour overload les méthodes de Dmatrix
+		 grâce à des Darray::
+
+	      -> Utilisation du produit scalaire pour le produit matriciel operator*(Dmatrix,Dmatrix)
+	       
+	      -> Conversion Darray(n) => Dmatrix(n,1)
+	      -> Cette conversion permet un calcul de operator*(Dmatrix, Dvector) en 
+	      	 utilisant la fonction déjà implémenté operator*(Dmatrix, Dmatrix)
+		 
+		 ==> Réutilisation = Robusté
+		 
+	      -> Utilisation d'une fonction inline pour les sommes dans cholesky (clarté ++)
+	      	 Cette fonction n'est utilisable que dans Dmatrix.cpp (visibilité conforme)
+		 
+Efficacité : 
+
+   **Cholesky -> Algorithme en place
+   	      -> Erreur de l'ordre de 1e-11 ( pour l'exemple dans test_Dmatrix_Cholesky )
+	         (exemple intéractif car on a juste a changer la define ERR_MAX)
+	      -> Cout en temps de O(n^2) où n est la taille de la matrice carré
+	      	 	 
+   **Transpose-> Algorithme en place pour les matrices carrés (en O(n^2) pour les rectangulaires)
+   	      -> Cout en temps de O(n^2/2) où n est la taille de la matrice carré	 
+
+..........................................................................................................................
+
+VALGRIND
+..........................................................................................................................
+ Pour l'ensemble des tests :
+
+test_Dvector_bases.te
+
+==1815== HEAP SUMMARY:
+==1815==     in use at exit: 0 bytes in 0 blocks
+==1815==   total heap usage: 35 allocs, 35 frees, 20,953 bytes allocated
+==1815== 
+==1815== All heap blocks were freed -- no leaks are possible
+==1815== 
+==1815== For counts of detected and suppressed errors, rerun with: -v
+==1815== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6 from 6)
+
+test_Dvector_operators.te
+
+==1816== 
+==1816== HEAP SUMMARY:
+==1816==     in use at exit: 0 bytes in 0 blocks
+==1816==   total heap usage: 51 allocs, 51 frees, 160,002,924 bytes allocated
+==1816== 
+==1816== All heap blocks were freed -- no leaks are possible
+==1816== 
+==1816== For counts of detected and suppressed errors, rerun with: -v
+==1816== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6 from 6)
+
+test_Dmatrix_bases.te
+
+==1833== 
+==1833== HEAP SUMMARY:
+==1833==     in use at exit: 0 bytes in 0 blocks
+==1833==   total heap usage: 20 allocs, 20 frees, 1,604 bytes allocated
+==1833== 
+==1833== All heap blocks were freed -- no leaks are possible
+==1833== 
+==1833== For counts of detected and suppressed errors, rerun with: -v
+==1833== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6 from 6)
+
+test_Dmatrix_operators.te
+
+==1834== 
+==1834== HEAP SUMMARY:
+==1834==     in use at exit: 0 bytes in 0 blocks
+==1834==   total heap usage: 35 allocs, 35 frees, 1,798 bytes allocated
+==1834== 
+==1834== All heap blocks were freed -- no leaks are possible
+==1834== 
+==1834== For counts of detected and suppressed errors, rerun with: -v
+==1834== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6 from 6)
+
+test_Dmatrix_Cholesky.te
+
+==1835== 
+==1835== HEAP SUMMARY:
+==1835==     in use at exit: 0 bytes in 0 blocks
+==1835==   total heap usage: 88 allocs, 88 frees, 6,180 bytes allocated
+==1835== 
+==1835== All heap blocks were freed -- no leaks are possible
+==1835== 
+==1835== For counts of detected and suppressed errors, rerun with: -v
+==1835== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6 from 6)
+ 

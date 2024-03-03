@@ -1,0 +1,98 @@
+############################
+#
+# analyse.txt
+#
+# Réponses aux questions de la
+# phase Analyse du TP2
+#
+# Valgrind sur le test par défaut
+# en bas de page
+#
+# ibakuyua
+# lebitb
+#
+# ENSIMAG 8 Février 2016
+#
+############################
+
+** Question 2)
+
+Posons F1 : Dvector operator + (Dvector a, Dvector b)
+et     F2 : Dvector operator + (const Dvector& a, const Dvector& b)
+
+Dans le cas de F1, les paramètres sont passés par copie         ==> Construction de deux Dvector copiant a et b
+Dans le cas de F2, les paramètres sont passés par référencement ==> Aucune construction, on use de a et b directement par référence.
+
+Le danger est : Dans F1 : Les paramètres utilisés lors de l'appel de la fonction ne peuvent pas être modifié
+		Dans F2 : Si nous n'ajoutons pas const, ils peuvent être modifiés.
+
+Ainsi, passer les paramètres par référence permet d'éviter la recopie, et donc un gain de temps et mémoire pour les vecteurs de grande taille.
+Il faut juste faire attention à le passer en [in] pour éviter l'écriture en ajoutant le mot clé 'const'.
+
+================================================================================================================================================
+
+** Question 4)
+
+Format de réponse : Utilisation de l'opérateur ...	||	pour ...  (Utilisé ?)
+
+	=	||	Constructeur par recopie 		(OUI)
+	>>	||	Constructeur par fichier 		(OUI)
+	()	||	Toutes les apparitions de vect[i] 	(NON)
+	+=	||	-= : (*this += (-double))		(OUI)
+	+=	||	-= : (*this += (-Dvector))		(OUI)
+	+=	||	+  : (Dvector1 += Dvector2)		(OUI)
+	+=	||	+  : (Dvector1 += double)		(OUI)
+	-=	||	-  : (Dvector1 -= Dvector2)		(OUI)
+	-=	||	-  : (Dvector1 -= double)		(OUI)
+	*=	||	/= : (*this *= (1/double))		(OUI)
+	*=	||	*  : (Dvector *= double)		(OUI)
+	/=	||	/  : (Dvector /= double)		(OUI)
+	==	||	!= : (!= <=> !(==))			(OUI)
+	+	||	+  : (double + Dvect = Dvect + double)	(OUI)
+	+	||	-  : (val1 - val2 = val1 + (-val2))	(OUI)
+	display ||	<< : (v.display(str), return str)	(OUI)
+
+
+
+================================================================================================================================================
+
+** Question 5)
+
+Time avec un vecteur de dimension 10_000_000 : 
+	
+	5.1) Sans memcpy : 				real	0m0.272s
+							user	0m0.204s
+							sys	0m0.056s
+
+	5.2) Sans memcpy ni verification des bornes ()	real	0m0.247s
+							user	0m0.173s
+							sys	0m0.053s
+
+	5.3) Avec memcpy :				real	0m0.208s
+							user	0m0.132s
+							sys	0m0.061s	
+				
+Nous pouvons donc remarquer que l'outil memcpy est bien plus développé en terme de performance qu'une implémentation à la main.
+La différence n'est pas négligeable.
+Nous pouvons aussi remarquer que la verification des bornes dans l'opérateur prend du temps (12% de temps supplémentaire) lorsque cet opérateur est utilisé (5.1 et 5.2).
+Néanmoins cette vérification reste nécessaire pour éviter les dépassements de borne.  
+
+================================================================================================================================================
+
+..........................................................................................................................
+
+VALGRIND
+..........................................................................................................................
+
+Test par défaut : valgrind bin/testOperator
+
+==3469== 
+==3469== HEAP SUMMARY:
+==3469==     in use at exit: 0 bytes in 0 blocks
+==3469==   total heap usage: 41 allocs, 41 frees, 160,002,412 bytes allocated
+==3469== 
+==3469== All heap blocks were freed -- no leaks are possible
+==3469== 
+==3469== For counts of detected and suppressed errors, rerun with: -v
+==3469== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+

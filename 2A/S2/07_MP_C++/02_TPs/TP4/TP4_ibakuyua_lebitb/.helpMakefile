@@ -1,0 +1,37 @@
+
+
+
+##################################################
+
+	  AIDE DU MAKEFILE : TP4
+
+ibakuyua
+lebitb
+
+ENSIMAG 14/03/2016
+
+##################################################
+
+Usage make [options] avec :
+
+[options] =
+	
+	check => Lance les tests de base
+
+	analyse => Lance l'analyse sur la complexité temporelle 
+			
+	doc   => Ouvre la documentation html
+		 du projet
+
+	clean => Nettoie les fichiers compilés
+
+	help  => Lance cette page d'aide
+
+
+Sans option : make va compiler l'ensemble des 
+	      fichiers (documentation et sources)
+
+##################################################
+
+
+.

@@ -1,0 +1,36 @@
+
+
+
+##################################################
+
+	  AIDE DU MAKEFILE : TP1
+
+ibakuyua
+lebitb
+
+ENSIMAG 3/02/2016
+
+##################################################
+
+Usage make [options] avec :
+
+[options] =
+	
+	check => Lance les tests de la classe
+		 Dvector
+	
+	doc   => Ouvre la documentation html
+		 du projet
+
+	clean => Nettoie les fichiers compilés
+
+	help  => Lance cette page d'aide
+
+
+Sans option : make va compiler l'ensemble des 
+	      fichiers (documentation et sources)
+
+##################################################
+
+
+.

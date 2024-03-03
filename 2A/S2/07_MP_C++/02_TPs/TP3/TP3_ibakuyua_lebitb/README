@@ -1,0 +1,118 @@
+##################################
+#           
+# TP3 : Heritage
+#
+# Ibakuyumcu       Lebit
+# Arnaud           Benjamin
+#
+##################################
+#
+# REMARQUE : 
+#
+# °)    Nous avons amélioré le Makefile
+#	dans src/ (beaucoup plus modable)
+#
+# °) 	Nous avons échangé n et m dans les 
+#	notations de l'énoncé
+#
+# °)	Nous avons utilisé la méthode inline
+#	pour toutes les "petites" fonctions
+#
+# °)	Ajout des throw dans la doc
+#
+# °)	Vous pouvez rediriger les résultats des 
+#	tests avec make check > fileout.txt
+#
+# °)	Nous avons enlevé les affichages
+#	de message lors de la création
+#	et destruction de Dvector
+#	pour éviter de poluer les tests
+#
+#	Il suffit de les décommenter
+#	dans Dvector.cpp
+#
+# 
+#
+##################################
+#
+# 1) Descriptif du TP3 : 
+#
+# 	Implémentation de la classe
+#	algèbre linéaire
+#
+##################################
+#
+# 2) Utilisation du Makefile :
+#
+# 	- all   : Compile le projet (Doc et sources)
+# 	- check : Lance les test par defaut ( voir 3))
+# 	- doc   : Lance la documentation
+# 	- clean : Nettoie les fichiers compilés
+# 	- help  : Lance l'aide du makefile
+#
+#	Possibilité de préciser le navigateur
+#	avec un OPEN=NomNav (par défault firefox)
+#
+# Exemple : make doc OPEN=open (pour Mac)
+#
+##################################
+#
+# 3) Utilisation des tests
+#
+# ** L'utilisation des assert permet de vraiment
+# justifier les test ! (voir src/test_*.cpp)
+#
+# ** La classe Dvector permet de tester en même temps
+#    la classe Darray
+#
+# 	3.1) ./test_Dvector_bases.te [argument]
+#
+# 	if argument =  
+# 		Lance le test par défaut
+# 		sur les méthodes basiques de la
+# 		classe Dvector
+# 	else argument = file.txt
+#		Lance le test sur le fichier
+#		file.txt contenant la valeur
+#		d'un vecteur de double
+#
+# exemple : $bin/test_Dvector_bases.te src/fichierTest/simple_test.txt
+#
+#	3.2) ./test_Dvector_operators.te [arg1] [arg2]
+#
+#	if arg1 = 
+#		Lance le test par défaut 
+#		sur les opérateurs de la
+#		classe Dvector 
+#	if arg1 = file.txt && arg2 = 
+#		Lance les tests d'opérations
+#		sur file.txt et un autre vecteur
+#	else arg1 = f1.txt && arg2 = f2.txt
+#		Lance les tests d'opérations
+#		sur f1.txt et f2.txt
+#
+##################################
+#
+# 4) Arborescence du dossier :
+#
+# 	-src/ : Contient les sources
+# 		et les tests en cpp et
+# 		des fichiers tests 
+# 	-doc/ : Contient la documentation
+# 		doxygen 
+# 	-bin/ : Contient les binaires
+# 		lors de la compilation
+#
+##################################
+#
+# 5) Un changement de nom des dossiers
+#    doit induire un changement dans
+#    le fichier docu/Doxyfile
+#
+#    OUTPUT_DIRECTORY = new value of DOCU_DIR
+#    INPUT = new value of SRC_DIR 
+#
+#    Ainsi qu'un changement de valeur
+#     des variables du Makefile général
+#
+##################################

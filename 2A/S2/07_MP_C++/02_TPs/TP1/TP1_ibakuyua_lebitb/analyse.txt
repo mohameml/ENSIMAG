@@ -1,0 +1,105 @@
+############################
+#
+# analyse.txt
+#
+# Réponses aux questions de la
+# phase Analyse du TP1
+#
+# Valgrind sur le test par défaut
+# en bas de page
+#
+# ibakuyua
+# lebitb
+#
+# ENSIMAG 3 Février 2016
+#
+############################
+
+Par habitude, nous avons déjà implémenté l'opérateur = dans ce TP1
+Voici pourquoi il est important de le faire :
+
+** Sans redéfinition de l'opérateur = 
+
+Dvector x;
+x = Dvector(3,1.);
+
+donne dans l'ordre :
+
+	1) Construction de x avec le constructeur par defaut
+	   x.length = 0;
+	   x.vect = nullptr;
+	
+	2) Construction d'un vecteur temp avec le constructeur avec arguments
+	   temp.length = 3
+	   temp.vect = Adresse;
+	   
+	3) Affectation attribut par attribut ( l'adresse est copié !!)
+	   x.length = 3
+	   x.vect = Adresse;
+	   
+	4) Destruction du vecteur temporaire
+
+Alors que Dvector x = Dvector(3,1.);
+
+donne dans l'ordre : 
+
+	1) Construction du vecteur x avec le constructeur avec arguments
+	   x.length = 3;
+	   x.vect = Adresse; 
+
+===> Problème : Dans le premier cas, Adresse est détruite lors de la destruction du vecteur temp,
+	        néanmoins on l'utilise encore puisque sa valeur est toujours présente dans le vecteur x.
+		Ainsi, on va utiliser un pointeur sur une case non alouée : INTERDIT
+
+		Dans le deuxième cas, Adresse est réservé pour le vecteur x, nous pouvons l'utiliser
+		sans problème.
+
+** Avec redéfinition de l'opérateur =
+
+Dvector x;
+x = Dvector(3,1.);
+
+donne dans l'ordre : 
+
+	1) 2) Idem
+
+	3) Affectation "intelligente" des attributs (valeur pour lentgh, nouveau vect de même valeur)
+	   x.length = 3;
+	   x.vect = Adresse2 tel que MEM(Adresse)=MEM(Adresse2)
+
+	4) Idem
+
+===> Le problème est donc résolu car la case à Adresse est désalloué lors de la destruction du vecteur
+     temporaire mais le vecteur x ne l'utilise pas, il utilise désormais une nouvelle case à l'adresse Adresse2
+     contenant les mêmes valeurs qui été présentes dans la case à l'adresse Adresse
+
+..........................................................................................................................
+
+VALGRIND
+..........................................................................................................................
+
+1) bin/testDvector
+
+==7516== 
+==7516== HEAP SUMMARY:
+==7516==     in use at exit: 0 bytes in 0 blocks
+==7516==   total heap usage: 35 allocs, 35 frees, 20,965 bytes allocated
+==7516== 
+==7516== All heap blocks were freed -- no leaks are possible
+==7516== 
+==7516== For counts of detected and suppressed errors, rerun with: -v
+==7516== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+2) bin/testDvector src/fichierTest/grand_test.txt
+
+==7543== 
+==7543== HEAP SUMMARY:
+==7543==     in use at exit: 0 bytes in 0 blocks
+==7543==   total heap usage: 33,478 allocs, 33,478 frees, 2,050,729 bytes allocated
+==7543== 
+==7543== All heap blocks were freed -- no leaks are possible
+==7543== 
+==7543== For counts of detected and suppressed errors, rerun with: -v
+==7543== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+..........................................................................................................................

@@ -1,0 +1,117 @@
+############################
+#
+# analyse.txt
+#
+# Réponses aux questions de la
+# phase Analyse du TP4
+#
+# ibakuyua
+# lebitb
+#
+# ENSIMAG 14 Mars 2016
+#
+############################
+TEMPORELLE SELON LA TAILLE ET LE CONTENEUR : 
+
+On remarque que deque est le conteneur le plus adapté pour le maillage après la list et vector
+
+Ceci est logique car vector est un tableau dynamique dont le redimensionnement entraine parfois 
+une réallocation entrainant une recopie.
+
+Concernant la complexité temporelle, on peut remarquer qu'elle est d'environ O(n*m*c)
+où c est le cout d'un push dans le STL considéré 
+
+/////////////////////////////////////////////////
+              LANCEMENT DE L'ANALYSE
+/////////////////////////////////////////////////
+
+
+==> test_Analyse nbre_maillage choix_STL avec 1 : list 2 : vector 3 : deque
+
+Test du fichier : test_Analyse 100 1
+
+
+real	0m0.009s
+user	0m0.001s
+sys	0m0.003s
+
+Test du fichier : test_Analyse 10000 1
+
+
+real	0m0.008s
+user	0m0.005s
+sys	0m0.002s
+
+Test du fichier : test_Analyse 1000000 1
+
+
+real	0m0.489s
+user	0m0.429s
+sys	0m0.050s
+
+Test du fichier : test_Analyse 10000000 1
+
+
+real	0m4.712s
+user	0m4.241s
+sys	0m0.464s
+
+
+Test du fichier : test_Analyse 100 2
+
+
+real	0m0.003s
+user	0m0.001s
+sys	0m0.002s
+
+Test du fichier : test_Analyse 10000 2
+
+
+real	0m0.005s
+user	0m0.003s
+sys	0m0.002s
+
+Test du fichier : test_Analyse 1000000 2
+
+
+real	0m0.248s
+user	0m0.171s
+sys	0m0.071s
+
+Test du fichier : test_Analyse 10000000 2
+
+
+real	0m2.675s
+user	0m1.905s
+sys	0m0.755s
+
+Test du fichier : test_Analyse 100 3
+
+
+real	0m0.002s
+user	0m0.001s
+sys	0m0.001s
+
+Test du fichier : test_Analyse 10000 3
+
+
+real	0m0.004s
+user	0m0.003s
+sys	0m0.001s
+
+Test du fichier : test_Analyse 1000000 3
+
+
+real	0m0.274s
+user	0m0.229s
+sys	0m0.039s
+
+Test du fichier : test_Analyse 10000000 3
+
+
+real	0m2.574s
+user	0m2.238s
+sys	0m0.329s
+/////////////////////////////////////////////////
+                 FIN DES ANALYSES
+/////////////////////////////////////////////////
