@@ -1,0 +1,175 @@
+---
+title: "TP5_ASM"
+author: "Tariq"
+date: "2023-04-21"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## TP5 Generalizd linear models for claim frequency and severity
+
+### Question 1 
+
+VIsualisation des données:
+
+**Male**: variable qualitative 
+Young: variable qualitative
+
+**DistLimit**: variable qualitative ordinale, car elle représente une limite de distance exprimée en kilomètres et se compose de six niveaux ordonnés.
+
+**GeoRegion**: variable qualitative ordinale
+
+**Expo**: variable quantitative continue,
+
+**ClaimAmount**: variable quantitative continue
+
+**NbClaim**: variable quantitative discrète, car elle représente le nombre de sinistres et ne peut prendre que des valeurs entières positives
+```{r}
+data <- read.csv("norwegianclaim.csv", stringsAsFactors
+= TRUE)
+str(data)
+summary(data)
+```
+
+### Question 2
+On va effectuer une simulation de données d'un modèle de régression de Poisson, avec deux manières
+ei représente la longueur de l'exposition, les ni sont générés a partir de la loi de poisson avec lambda = 5 * ei.
+
+f1 ne prend pas en comtpe ei et f2 inclut la variable d'exposition comme une variable offset.
+
+Les coefficients intercepts des modèles f1 et f2 sont affichés. On peut interpréter ces valeurs comme étant le facteur multiplicatif sur la variable dépendante lorsque toutes les autres variables sont maintenues constantes. Dans ce cas, le facteur multiplicatif pour le modèle f1 est de 3.862422 et pour le modèle f2, il est de 4.974738.
+
+```{r}
+# définition de la taille des données a simuler a 500
+n <- 500
+
+#les valeurs tirés uniformément entre (1/2) et 1
+ei <- runif(n, 1/2, 1)
+ni <- rpois(n, lambda=5 * ei)
+
+# régression de Poisson sur ni, avec les coefficients d'exposition ei en tant que pondération, option "family = poisson("log")" est adaptée pour les modèles exponentiels
+f1 <- glm(ni ~ 1, weights=ei, family = poisson("log"))
+f2 <- glm(ni ~ 1 + offset(log(ei)), family = poisson("log"))
+c(exp(coef(f1)), exp(coef(f2)))
+```
+### Question 3
+On veux créer un modèle généralisé linéaire de poisson avec toutes les variables explicatives.
+
+```{r}
+model_poisson1 <- glm(NbClaim ~ Male + Young + DistLimit + GeoRegion + Expo + ClaimAmount, data = data, family = poisson())
+summary(model_poisson1)
+```
+
+Voici la formule de régression du modèle basique:
+
+$NbClaim = exp(-3.220 - 0.4101*Male + 0.05984*Young + 0.1505*DistLimit16000km + 0.09221*DistLimit20000km + 0.3773*DistLimit25000-30000km - 0.2353*DistLimit8000km + 0.5812*DistLimitno limit + 0.1842*GeoRegionHigh+ - 0.3912*GeoRegionLow- - 0.2434*GeoRegionLow+ - 0.1044*GeoRegionMedium- - 0.01648*GeoRegionMedium+ + 0.3018*Expo + 0.00001129*ClaimAmount)$
+
+step() ajuste un modèle de régression en supprimant les termes du modèle original un par un, en partant du modèle complet et en utilisant la statistique F pour comparer les modèles. La direction "backward" signifie que la fonction commence avec le modèle complet et supprime les termes un par un jusqu'à ce que tous les termes restants soient significatifs.
+
+Cette méthode n'a cependant pas réussi à éliminer aucune variable par rapport au modèle de base. Les variables incluses sont: Male, Young, DistLimit, GeoRegion, Expo et ClaimAmount.
+
+
+```{r}
+# enleve les variables non significatives avec un modèle backward
+model_poisson1_backward <- step(model_poisson1, direction = "backward")
+summary(model_poisson1_backward)
+```
+
+### Question 4
+
+Pour répondre a la question, on va créer une nouvelle data qui garde les jeunes hommes sans limite de distance et dans la zone la moins dense.
+
+```{r}
+#on filtre la data avec ce qui nous intéresse
+data_filtered <- subset(data, Male == 1 & Young == 1 & DistLimit == "no limit" & GeoRegion == "Low-")
+
+
+#on prédis claim number avec le modèle de poisson ajusté
+pred <- predict(model_poisson1, newdata = data_filtered, type = "response")
+
+#afficher l'espérance de nombre de sinistres
+pred
+```
+
+### Question 5
+On va créer un sous ensemble avec des montants > 0.
+On utilise la méthode "backward" afin de ne garder que les variables explicatives pertinentes. Le modèle final ne comprenait que les variables explicatives suivantes : Sexe, Âge, Durée d'exposition et Nombre de réclamations antérieures
+Le modèle ne semble pas être très précis pour prédire les réclamations positives.
+De plus les p valeurs de toutes les variables du modèle sont supérieures à 5%, ce qui indique qu'elles ne sont pas significativement associées aux réclamations positives.
+
+L'équation du modèle est :
+$ClaimAmount = 10.191287 - 0.091488 * Male + 0.001289 * Young - 0.002636 * Expo - 0.031033 * NbClaim$
+
+```{r}
+data_pos_claim <- subset(data, ClaimAmount > 0)
+
+#GLM gamma sur ce sous-ensemble
+model_gamma <- glm(ClaimAmount ~ Male + Young + DistLimit + GeoRegion + Expo + NbClaim, data = data_pos_claim, family = Gamma(link = "log"))
+
+#fonction step() et la méthode "backward" permet de prendre les variables les plus appropriées
+model_gamma_backward <- step(model_gamma, direction = "backward")
+summary(model_gamma_backward)
+
+```
+
+### Question 6
+
+les étapes de sélection montrent que la variable "GeoRegion" est la moins importante et est retirée en premier, suivie de "DistLimit", "Young", "Expo" et "NbClaim". Finalement, le modèle retenu ne comprend que la variable "Male".
+
+Le modèle final est donc : ClaimAmount ~ Male.
+
+```{r}
+library(MASS)
+# Sélection des variables pertinentes
+subset_data <- data_pos_claim[, c("ClaimAmount", "Male", "Young", "DistLimit", "GeoRegion", "Expo", "NbClaim")]
+subset_data <- subset_data[complete.cases(subset_data), ]
+model_aic <- stepAIC(glm(ClaimAmount ~ ., data = subset_data, family = gaussian(link = "log")), direction = "both")
+
+#modèle GLM inverse Gaussian avec les variables sélectionnées
+model_ig <- glm(ClaimAmount ~ Male + Young + DistLimit + Expo, data = subset_data, family = inverse.gaussian(link = "sqrt"))
+
+summary(model_ig)
+
+```
+ 
+### Question 7
+Pour comparer et sélectionner le modèle le plus approprié pour la gravité des sinistres, nous devons d'abord ajuster les modèles de régression gamma et inverse gaussienne sur l'ensemble des données et ensuite comparer leurs critères d'information d'Akaike (AIC). L'AIC est une mesure de la qualité d'ajustement d'un modèle qui prend également en compte la complexité du modèle. Le modèle avec le plus faible AIC est considéré comme étant le meilleur parmi les modèles comparés.
+
+```{r}
+#ajustement du modèle gamma
+model_gamma_full <- glm(ClaimAmount ~ Male, data = data_pos_claim, family = Gamma(link = "log"))
+gamma_aic <- AIC(model_gamma_full)
+
+#ajustement modèle inverse gaussien sur l'ensemble des données
+model_ig_full <- glm(ClaimAmount ~ Male, data = data_pos_claim, family = inverse.gaussian(link = "sqrt"))
+ig_aic <- AIC(model_ig_full)
+
+# Comparaison des AIC
+data.frame(Model = c("Gamma", "Inverse Gaussian"), AIC = c(gamma_aic, ig_aic))
+
+```
+
+Le modèle gamma a un AIC de 186937.8, tandis que le modèle inverse gaussien a un AIC de 215173.4. Étant donné que le modèle avec le plus faible AIC est considéré comme étant le meilleur parmi les modèles comparés, le modèle gamma est le plus approprié pour la gravité des sinistres dans cette situation.
+
+Pour visualiser la performance des modèles, nous pouvons tracer les résidus de chaque modèle et comparer leurs distributions. Un modèle bien ajusté devrait montrer une distribution approximativement symétrique des résidus centrés autour de zéro.
+
+```{r}
+#résidus de Pearson pour chaque modèle
+resid_gamma <- residuals(model_gamma_full, type = "pearson")
+resid_ig <- residuals(model_ig_full, type = "pearson")
+
+par(mfrow = c(1, 2)) 
+
+# Histogramme des résidus pour le modèle gamma
+hist(resid_gamma, main = "Modèle Gamma", xlab = "Résidus", col = "lightblue", border = "black")
+abline(v = 0, col = "red", lwd = 2)
+
+#modèle inverse gaussien
+hist(resid_ig, main = "Modèle Inverse Gaussien", xlab = "Résidus", col = "lightgreen", border = "black")
+abline(v = 0, col = "red", lwd = 2)
+
+```
+

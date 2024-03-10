@@ -1,0 +1,219 @@
+---
+title: "TP3_ACP"
+output: html_document
+date: "2023-03-13"
+---
+### Data preparation
+
+1) Importation des données
+```{r setup, include=FALSE}
+cars04 <- read.csv("cars-2004.csv", header=TRUE)
+```
+2) Conversion
+```{r setup, include=FALSE}
+mpg2kml <- 0.42514 # miles par gallon -> kilomètre par litre
+usd2eur <- 0.945 # dollars américains -> Euro
+lb2kg <- 0.4535923 # livre -> kilogramme
+inch2cm <- 2.54 # pouce -> centimètre
+
+#Conversion des unités américaines:;
+cars04$CityMPG <- cars04$CityMPG * mpg2kml
+cars04$HighwayMPG <- cars04$HighwayMPG * mpg2kml
+cars04$Retail <- cars04$Retail * usd2eur
+cars04$Dealer <- cars04$Dealer * usd2eur
+cars04$Weight <- cars04$Weight * lb2kg
+cars04$Length <- cars04$Length * inch2cm
+cars04$Width <- cars04$Width * inch2cm
+cars04$Wheelbase <- cars04$Wheelbase * inch2cm
+```
+
+
+3) 1ère exploration des données
+```{r cars}
+# analyse descriptive sommaire
+summary(cars04)
+#corrélation entre les variables
+pairs(cars04)
+
+# histogramme pour chaque variable pour visualiser leur distribution 
+library(ggplot2)
+ggplot(cars04, aes(x = Retail)) + geom_histogram()
+ggplot(cars04, aes(x = Dealer)) + geom_histogram()
+ggplot(cars04, aes(x = Engine)) + geom_histogram()
+ggplot(cars04, aes(x = Cylinders)) + geom_histogram()
+ggplot(cars04, aes(x = Horsepower)) + geom_histogram()
+ggplot(cars04, aes(x = CityMPG)) + geom_histogram()
+ggplot(cars04, aes(x = HighwayMPG)) + geom_histogram()
+ggplot(cars04, aes(x = Weight)) + geom_histogram()
+ggplot(cars04, aes(x = Length)) + geom_histogram()
+ggplot(cars04, aes(x = Width)) + geom_histogram()
+ggplot(cars04, aes(x = Wheelbase)) + geom_histogram()
+```
+
+
+
+# matrice de corrélation
+
+La variable la plus corrélée avec la variable "Retail" est "Dealer" avec une corrélation de 0,999. Les variables "Horsepower" et "Retail" ont également une forte corrélation avec une valeur de 0,835.
+
+La variable la moins corrélée est "Wheelbase" avec une corrélation de 0,203 avec "Retail". Les variables "CityMPG" et "HighwayMPG" ont également une corrélation négative assez forte avec "Retail" et "Dealer" avec des valeurs respectives de -0,485 et -0,469.
+
+Les variables "Engine", "Cylinders", "Weight", "Length" et "Width" ont des corrélations positives assez fortes entre elles. En particulier, la corrélation entre "Weight" et "Width" est la plus élevée avec une valeur de 0,807.
+
+```{r cars}
+cor(cars04)
+```
+# Carte de la chaleur
+
+Permet une visualisation rapide de la corrélation.
+```{r cars}
+library(ggplot2)
+# install.packages("reshape2")
+library(reshape2)
+ggplot(melt(cor(cars04)), aes(x=Var1, y=Var2, fill=value)) + 
+     geom_tile() + 
+     scale_fill_gradient2(low="blue", mid="white", high="red", midpoint=0) +
+     theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+     labs(x="Variables", y="Variables")
+```
+
+## Principal component analysis using stats package
+
+4) 
+L'aide nous donne les indications suivantes:
+--
+Les méthodes de calcul de la matrice de covariance sont différentes. La fonction prcomp() utilise la méthode de décomposition en valeurs singulières (SVD) pour calculer la matrice de covariance, tandis que la fonction princomp() utilise la méthode de la matrice de covariance brute.
+--
+Les sorties graphiques sont différentes. La fonction prcomp() ne produit pas de graphe par défaut, mais elle permet d'obtenir les graphes souhaités en combinant les résultats obtenus avec d'autres fonctions graphiques. La fonction princomp() produit des graphes par défaut, qui montrent la variance expliquée par chaque composante et la proportion de variance expliquée.
+
+5) Tests des 2 méthodes :
+
+Les deux méthodes ont produit des résultats similaires, montrant que la première composante principale (PC1) est la plus importante avec une variance expliquée de 64,59%, suivie de la deuxième composante principale (PC2) avec une variance expliquée de 17,13%. Ensemble, les deux premières composantes principales expliquent plus de 81% de la variance totale.
+
+```{r pressure, echo=FALSE}
+# ACP avec prcomp():
+pca1 <- prcomp(cars04, center = TRUE, scale. = TRUE)
+summary(pca1)
+
+# ACP avec princomp():
+pca2 <- princomp(cars04, cor = TRUE)
+summary(pca2)
+#plot(pressure)
+
+# Compare the explained variances
+print(pca1$sdev^2/sum(pca1$sdev^2))
+print(pca2$sdev^2/sum(pca2$sdev^2))
+
+```
+
+6)
+```{r}
+# Standardiser la matrice de données M
+M <- as.matrix(cars04)
+M <- scale(M)
+
+# Calculer la matrice de covariance C
+C <- cov(M)
+
+# Calculer les vecteurs et valeurs propres de C
+eigen_results <- eigen(C)
+
+# Calculer le produit matriciel V M
+V <- eigen_results$vectors
+VM <- V %*% t(M)
+
+# Calculer les valeurs propres de VM
+eigen_results_VM <- eigen(VM %*% t(VM))
+
+# Comparer les valeurs propres avec les variances expliquées
+explained_variances <- eigen_results$values / sum(eigen_results$values)
+print(round(eigen_results_VM$values / sum(eigen_results_VM$values), 4))
+print(round(explained_variances, 4))
+```
+L'output renvoie deux vecteurs de valeurs propres. 
+Les deux vecteurs sont les mêmes, ce qui est attendu car ils devraient représenter les mêmes informations. Les valeurs propres indiquent la quantité de variance dans les données qui est expliquée par chaque composante principale.
+
+7)
+```{r}
+# Perform PCA using prcomp()
+pca <- prcomp(M, center=TRUE, scale=TRUE)
+
+# Summarize the results
+summary(pca)
+
+# Plot the proportion of variance explained by each component
+plot(pca)
+```
+On peut voir avec le graphique et summary que les 3 premières composantes expliquent une grande partie de la variance supérieur à 80% . après la troisiéme composante, la proportion de variance expliquée par chaque composante diminue rapidement . par conséquent on pourrions choisir de retenir les 3 premieres composantes.
+
+8)
+```{r}
+# Créer un biplot des deux premières composantes principales
+biplot(pca, col=c("white", "black"), cex=0.8)
+
+# Ajouter les étiquettes de variables sur le graphique en zoomant pour une meilleure lisibilité
+text(pca$rotation[, 1:2], labels=colnames(M), col="red", cex=0.8, pos=3)
+```
+L'interprétation du biplot implique de regarder la position des variables par rapport aux axes du graphique. Les variables proches d'un axe donné sont fortement corrélées avec cette composante. Par exemple, dans le biplan, nous pouvons voir qu'il y'a toujours une corrélation entre ces variables et la première composante principale et que weight, length, and width, engine size, and number of cylinders sont tous proches de l'axe de la première composante principale, ce qui indique une forte corrélation entre ces variables et la première composante. De même, nous pouvons voir que horsepower,  Wheelbase , Dealer etc .. sont proches de l'axe de la deuxième composante, ce qui suggère que la deuxième composante capture des informations sur la puissance et les performances des voitures.
+
+Dans l'ensemble, les biplots peuvent donner un aperçu de la structure sous-jacente de l'ensemble de données et nous aider à interpréter la signification de chaque composante principale.
+
+9)
+
+```{Rcpp}
+devtools::install_github("husson/FactoMineR")
+```
+
+```{r}
+#Install and load the FactoMineR package
+# update.packages()
+#remove.packages("rlang")
+#install.packages("devtools")
+#install.packages("FactoMineR", repos = "https://cran.rstudio.com/")
+#install.packages("FactoMineR")
+#devtools::install_github("husson/FactoMineR")
+library(FactoMineR)
+# Perform PCA on the standardized data using the PCA() function
+pca_fm <- PCA(scale(M), graph=FALSE)
+# Get a summary of the PCA results using summary()
+summary(pca_fm)
+# Obtain a description of the dimensions using dimdesc()
+dimdesc(pca_fm, axes=c(1,2))
+
+
+```
+
+La fonction dimdesc() affiche les contributions des variables et les corrélations pour chaque composante principale.
+
+Nous pouvons comparer les résultats obtenus avec la fonction PCA() du package FactoMineR avec ceux obtenus avec la fonction prcomp() du package stats. Dans ce cas, les deux fonctions fournissent des résultats similaires, notamment la proportion de variance expliquée par chaque composante et la contribution de chaque variable à chaque composante.
+
+En général, le choix de la fonction ACP dépend des besoins spécifiques de l'analyse et des fonctionnalités offertes par chaque progiciel. La fonction prcomp() du package stats est une fonction de base largement utilisée pour l'ACP, tandis que la fonction PCA() du package FactoMineR offre des fonctionnalités supplémentaires telles que la description des variables et des dimensions, les cartes factorielles et les biplots.
+
+10)
+```{r}
+# Plot individuals in plane defined by PC1 and PC2
+plot(pca_fm$ind$coord[,c(1,2)], type="n", main="PCA: PC1 vs PC2", label="none")
+points(pca_fm$ind$coord[,c(1,2)], col="blue", pch=20, cex=1.5)
+```
+
+
+Le graphique obtenu montre la distribution des individus dans le plan défini par PC1 et PC2. Nous pouvons voir quels individus sont proches les uns des autres et lesquels sont éloignés les uns des autres, et identifier tout groupe ou modèle dans les données. Cela peut nous aider à comprendre les relations entre les variables et la structure sous-jacente des données.
+
+11)
+
+```{r}
+my3car <- c("Audi RS 6", "Ford Expedition 4.6 XLT", "Nissan Sentra 1.8")
+
+# Select rows corresponding to each car
+audi <- subset(cars04, Retail == my3car[1])
+ford <- subset(cars04, Retail == my3car[2])
+nissan <- subset(cars04, Retail == my3car[3])
+
+# Print the selected rows
+print(audi)
+print(ford)
+print(nissan)
+
+```
+
+The output will give us information about the characteristics of each car.

@@ -1,0 +1,118 @@
+---
+title: "TP1 Asm"
+output:
+  html_document: default
+  pdf_document: default
+date: "2023-02-08"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+Auteur : Mohamed-Aymane AKIL, Mohamed Lemine Isselmou, Tariq Sereir
+
+## Exercice 1 
+
+1) Pour simuler $1,206,000$ variables aléatoires suivant une loi normale standard $\mathcal{N}(0,1)$ et les stocker dans une matrice 
+puis dans un data.frame avec $6,000$ lignes et $201$ colonnes.
+Cela définit une graine pour le générateur de nombres aléatoires, puis simule les variables aléatoires en utilisant la 
+fonction rnorm et les stocke dans une matrice mat. Ensuite, la matrice est convertie en data.frame en utilisant la fonction as.data.frame.
+
+```{r 1}
+set.seed(0)
+n_rows <- 6000
+n_cols <- 201
+mat <- matrix(rnorm(n_rows * n_cols), nrow = n_rows, ncol = n_cols)
+df <- as.data.frame(mat)
+```
+
+2) Soit $X = [X_1, X_2, ..., X_{200}]$ une matrice de variables explicatives et $Y$ le vecteur des variables à prédire, la régression linéaire multiple gaussienne peut être définie comme suit:
+  $Y = β_0 + β_1X_1 + β_2X_2 + ... + β_{200}X_{200} + ε$
+  où $β_0, β_1, β_2, ..., β_{200}$ sont les coefficients de régression et ε est le bruit gaussien.
+Le modèle de régression associé aux données peut être défini comme cela:
+    $Y = f(X) + ε$
+
+
+3) Estimation des coefficients de régression:
+$df[,1]$ représente la première colonne de la base de données (qui est la variable dépendante), $df[,2:201]$ représente les dernières $200$ colonnes (les variables indépendantes), et . représente toutes les colonnes.
+On  extrait les coefficients de régression estimés en utilisant la fonction coef :
+```{r}
+reg <- lm(df[,1] ~ ., data = df[,2:201])
+```
+
+
+```
+coef(summary(reg))
+```
+4) Simulation d'un échantillon de taille $n = 1000$ du modèle donné
+```{r 4}
+n <- 1000
+X1 <- rnorm(n)
+X2 <- 3 * X1 + rnorm(n)
+Y <- X2 + X1 + 2 + rnorm(n)
+```
+La distribution de $(X_{(1,i)}, X_{(2,i)})$ pour un $i$ donné est une distribution multivariée normale. 
+```{r 4_2}
+library(MASS)
+mu <- c(0, 0)
+sigma <- matrix(c(1, 3, 3, 10), nrow = 2)
+simulated_data <- mvrnorm(n, mu, sigma)
+```
+Nuages de points des valeurs simulées:
+```{r 4_3}
+plot(X1, X2, xlab = "X1", ylab = "X2", main = "Cloud of points of (X1, X2)")
+```
+
+La forme du nuage de points devrait ressembler à une droite, en effet la relation entre $X_1$ et $X_2$ est linéaire. Les deux variables $X_1$ et $X_2$ sont fortement corrélées car $X_2$ est déterminé par $X_1$ dans le modèle. 
+
+5) On peux voir dans un premier temps que les valeurs estimées sont assez proches des valeurs réelles:
+```{r 5}
+# définir les paramètres réels
+beta_1 <- 2
+beta_2 <- 3
+beta_0 <- 1
+sigma2 <- 1
+# générer des données pour n = 1000
+set.seed(1)
+#set.seed(3)
+n <- 1000
+X1 <- rnorm(n)
+X2 <- 3 * X1 + rnorm(n)
+epsilon1 <- rnorm(n, mean = 0, sd = sqrt(sigma2))
+epsilon2 <- rnorm(n, mean = 0, sd = sqrt(sigma2))
+Y1 <- beta_1 * X1 + beta_0 + epsilon1
+Y2 <- beta_2 * X2 + beta_0 + epsilon2
+# estimer les coefficients pour les deux modèles
+model1 <- lm(Y1 ~ X1)
+model2 <- lm(Y2 ~ X2)
+# vérifier si les coefficients des modèles sont proches des valeurs réelles
+coef_model1 <- coef(summary(model1))
+coef_model2 <- coef(summary(model2))
+cat("La valeur estimée pour beta_0 dans le modèle 1 est", coef_model1[1], ", la valeur réelle est", beta_0, "\n")
+cat("La valeur estimée pour beta_1 dans le modèle 1 est", coef_model1[2], ", la valeur réelle est", beta_1, "\n")
+cat("La valeur estimée pour beta_0 dans le modèle 2 est", coef_model2[1], ", la valeur réelle est", beta_0, "\n")
+cat("La valeur estimée pour beta_2 dans le modèle 2 est", coef_model2[2], ", la valeur réelle est", beta_2, "\n")
+```
+
+Lorsque n est plus petit, les estimations des paramètres peuvent être plus aléatoires et moins précises en raison d'une moindre quantité de données. Par conséquent, l'incertitude autour des estimations augmente et il est possible que les estimations soient très différentes de la valeur réelle.
+La valeur estimée pour $\beta_0$ dans le modèle $1$ est $0.6567597$ , la valeur réelle est $1$
+La valeur estimée pour $\beta_1$ dans le modèle $1$ est $2.328127$ , la valeur réelle est $2$ 
+
+6) Simulation d'un échantillon de taille $n = 10$ du modèle donné
+```{r}
+set.seed(0)
+X1 <- rnorm(10)
+X2 <- 3 * X1 + rnorm(10)
+d_f <- data.frame(X1, X2)
+Y <- lm(df[1:10,1] ~ ., data = d_f)
+#summary(Y)
+y_pred <- predict(Y)
+plot(y_pred, df[1:10, 1], xlab = "Y of model", ylab = "real Y", main = "Cloud of points of (Y_model, real_Y)")
+```
+
+on voit qu'avec just deux variables explicatives on a pas bien pu prédire $Y$.
+```{r}
+nouvelles_donnees = data.frame(X1 = rnorm(1000), X2 = 3*X1 + rnorm(1000))
+y_pred <- predict(Y, nouvelles_donnees)
+plot(y_pred, df[1:1000, 1], xlab = "Y of model", ylab = "real Y", main = "Cloud of points of (Y_model, real_Y)")
+```

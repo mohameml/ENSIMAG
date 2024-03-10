@@ -1,0 +1,382 @@
+---
+title: "TP2"
+output:
+  html_document: default
+  pdf_document: default
+date: "2023-02-20"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question 1
+
+Lecture des données
+
+```{r cars}
+library(ggplot2)
+prostateCancer <- read.table('./prostate.data.txt',header=TRUE)
+prostateCancer <- prostateCancer[,colnames(prostateCancer) != "train"]
+attach(prostateCancer)
+dim(prostateCancer)
+head(prostateCancer)
+summary(prostateCancer)
+```
+
+## Question 2:
+
+D’après la matrice de corrélation obtenue, on constate une forte corrélation entre lcavol et les deux prédicteurs lcp et lpsa, avec des coefficients de corrélations respectifs de 0,675 et 0,734. Les différents coefficients de corrélation sont également visualisables sur le graphe, accompagnés de droites de régression obtenues avec la méthode des moindres carrés ordinaires.
+
+```{r}
+droite_reg <- function(x,y) {
+	points(x,y)
+	abline(lsfit(x,y),col="blue")
+}
+correlation_valeur <- function(x,y){
+  par(usr = c(0, 1, 0, 1))
+  coeff <- round(cor(x,y),digits = 2)
+  text(0.5,0.5,coeff)
+}
+pairs(prostateCancer,upper.panel = droite_reg,lower.panel = correlation_valeur)
+cor(prostateCancer)
+```
+
+## Question 3:
+
+On s'intéresse à construire un modèle predictive pour la variable $lcavol$. On remarque premièrement qu'on a deux prédicteurs qualitatives svi et gleason, on utilise la fonction $factor()$ pour avoir des prédicteurs de niveaux pour chacun d'eux. Et on utilise l'équation de regression suivante:
+
+$\text{lcavol} = \beta_{0}+\beta_{1}\text{lweight}+\beta_{2}\text{age}+\beta_{3}\text{lbph}+\beta_{4}\text{svi1}+\beta_{5}\text{lcp}+\beta_{6}\text{gleason7}+\beta_{7}\text{gleason8}+\beta_{8}\text{gleason9}+\beta_{9}\text{pgg45}+\beta_{10}\text{lpsa} + \epsilon$, avec les $(\beta_{i})_{i \in [\![0;10]\!] }$, et $\epsilon$ l'erreur indépendante des différentes prédicteurs. On remarque que les intercepts $\beta_{5}$ et $\beta_{10}$ sont importants, ce qui permet d'appuyer le fait que les deux prédicteurs $lcp$ et $lpsa$ sont statistiquement significatif, et nous permettent à première vu une prédiction meilleur du $lcavol$.
+
+```{r}
+prostateCancer$gleason <- factor(prostateCancer$gleason)
+prostateCancer$svi <- factor(prostateCancer$svi)
+reg <- lm(lcavol ~ ., data=prostateCancer)
+summary(reg)
+```
+
+## Question 4:
+
+Avec la sortie de la fonction $confint()$, on lève plusieurs remarques importantes sur notre modèle:
+
+1- Il y certain prédicteurs, vu leurs intervalles de confiance donné, sont fortement centrés sur 0 ce qui veut dire que le coefficient $\beta{i}$ associé à ce prédicteur est proche de 0 ou même nulle, ce qui nous permet de dire qu'ils sont assez peu significatif d'un point de vu statistique (Exemple: age, pgg45 et lbph).
+
+2- Aussi, il y a des prédicteurs dont l'intervalle de confiance ne contient pas 0, ce qui veut dire que ces prédicteurs sont statistiquement significatifs. Ceci est notamment vrai pour les prédicteurs dont on a remarqué une grande dépendance avec lcavol (Exemple: lpsa, lcp).
+
+```{r}
+confint(reg)
+```
+
+## Question 5:
+
+lpsa a une grande importance dans notre modèle en termes de prédiction, car il existe une dépendance assez forte entre elle et la variable $lcavol$ qu'on veut prédire. En effet, l'intervalle de confiance associé à la lpsa ne contient pas 0, ce qui nous permet de déduire que le coefficient $\beta$ associé est non nulle. Aussi, la p-valeur est assez faible, ce qui nous permet de rejeter l'hypothèse nulle et par suite assumer que le $\beta$ est non nul. Donc lpsa a un effet important dans le modèle de régression de la variable lcavol.
+
+## Question 6:
+
+```{r}
+ggplot(prostateCancer, aes(x=lcavol, y= predict(reg))) +
+  geom_point() +
+  geom_abline(intercept=0, slope=1) +
+  labs(x='Actual Values of lcavol', y='Predicted Values of lcavol', title='Predicted vs. Actual Values of lcavol')
+```
+
+```{r}
+residus <- residuals(reg)
+residus_df <- data.frame(residus)
+ggplot(residus_df, aes(x = residus)) + geom_histogram()
+#If the residuals are normally distributed, the points in the normal probability plot should fall along a straight line.
+qqnorm(residus)
+qqline(residus)
+
+```
+On peut remarquer à l'aide du graphe et de Shapiro que les résidus suivent une loi normale, car la p-value est de l'orde de 0.7 ce qui est largement supérieur à 0.05. Ainsi on peut assumer que les residus suivent une loi normale.
+```{r}
+shapiro.test(residus)
+```
+Et calculant la somme des carrés des résidus, on trouve que le RSS est égal à $41.81$
+```{r}
+rss <- sum(resid(reg)^2)
+```
+## Question 7:
+A priori, la valeur RSS indique à première vu un ajustement assez mauvais entre les valeurs prédites et les valeurs réelles du lcavol. Ceci est peut être dû au fait qu'il y a des prédicteurs qu'on peut enlever du modèle.
+
+## Question 8:
+On remarque qu'avec ce modèle le RSS associé devient plus important que le modèle précédent. Ceci est du certainement au fait qu'on a éliminé deux variables lpsa et lcp qui ont une forte corrélation avec lcavol, et qui pouvait nous aider à prédire de façon plus exact lcavol.
+```{r}
+reg2 <- lm(lcavol ~ . - lpsa - lcp, data = prostateCancer)
+rss2 <- sum(resid(reg2)^2)
+```
+
+## Question 9:
+On peut comparer les R squared, dans le premier modèle, on a pu avoir un R squared de l'ordre de 0.68, ce qui veut dire qu'on peut expliquer $68\%$ du lcavol à partir du modèle donné. Lorsqu'on élimine lpsa et lcp, le R squared dimunie vers $40\%$, ainsi lpsa et lcp sont importantes pour l'explication du lcavol. Et en éliminant le lweight, on remarque que R squared est de l'ordre de 0.69, ce qui veut dire 
+```{r}
+reg3 <- lm(lcavol ~ . - lweight, data = prostateCancer)
+rss3 <- sum(resid(reg3)^2)
+```
+
+## Question 10:
+```{r}
+fit_gleason <- lm(lcavol ~ gleason, data = prostateCancer, x = TRUE)
+#matrice de régression
+X <- model.matrix(fit_gleason)
+```
+Les résultats de "print(X)" montrent une matrice de 84 lignes et 4 colonnes. Chaque ligne correspond à une observation (patient) et chaque colonne correspond à un niveau de Gleason (7, 8, 9 ou 10). La colonne "Intercept" représente la constante de régression. Les patients ayant un niveau de Gleason inférieur ou égal à 6 ne sont pas inclus dans cette matrice car ils sont utilisés comme référence dans la régression logistique multinomiale.
+
+## Question 11:
+```{r}
+#On enlève l'intercepts
+fit_gleason <- lm(lcavol ~ 0 + gleason, data = prostateCancer, x = TRUE)
+X <- model.matrix(fit_gleason)
+```
+
+## Question 12:
+```{r}
+modele <- lm(lcavol ~ 0 + gleason, data = prostateCancer)
+table_anova <- anova(modele)
+print(table_anova)
+table_cmp <- model.tables(aov(modele))
+modele <- lm(lcavol ~ 0 + gleason, data = prostateCancer)
+```
+Nous pouvons voir que la somme des carrés totale est de 310.144, ce qui représente la variation totale de lcavol. La variation expliquée par le Gleason est de 211.263, ce qui représente une grande proportion de la variation totale. La statistique F est de 49.674 et le p-value est très faible, ce qui indique que l'effet du Gleason est significatif. En outre, nous avons une différence significative entre les niveaux de Gleason, car la p-value est inférieure au seuil de significativité de 0,05. Enfin, nous pouvons voir que la somme des carrés résiduels est de 98.881, ce qui représente la variation non expliquée de lcavol.
+
+## Question 13:
+```{r}
+# Effectuer l'ANOVA à deux facteurs
+model2 <- aov(lcavol ~ svi*gleason, data= prostateCancer)
+# Afficher les résultats de l'ANOVA
+summary(model2)
+```
+Les résultats de l'analyse de variance à deux facteurs montrent que les variables prédicteurs "svi" et "gleason" ont un effet significatif sur la variable dépendante "lcavol". En effet, les valeurs F pour "svi" et "gleason" sont respectivement de 44.091 (p < 0.001) et 5.198 (p = 0.00233), ce qui indique une forte association entre ces variables et "lcavol". Cependant, l'interaction entre "svi" et "gleason" n'est pas significative (F = 1.168, p = 0.28270), ce qui signifie que leur effet combiné n'a pas d'impact significatif sur "lcavol". Les résidus sont également significatifs (p < 0.001), indiquant que le modèle n'explique pas entièrement la variance de la variable dépendante.
+
+## Question 14:
+```{r}
+model3 <- aov(lcavol ~ 0 + svi:gleason, data= prostateCancer)
+summary(model3)
+```
+le modèle avec uniquement l'effet croisé svi:gleason est significatif avec une F-value de 43.69 et un p-value très faible (moins de 2e-16), indiquant que le modèle est très probablement valide. Les résidus ont également une variance homogène, ce qui est une autre condition pour que les résultats soient fiables. On peut donc conclure que l'interaction entre svi et gleason est significative pour prédire la variable lcavol.
+
+## Question 15:
+On remarque que le rss 
+```{r}
+model1 <- lm(lcavol ~ 1, data=prostateCancer)
+model2 <- lm(lcavol ~ .,data = prostateCancer[,c(1,2,3)])
+model3 <- lm(lcavol ~ .,data = prostateCancer[,c(1,2,5)])
+res1 <- sum(resid(model1)^2)
+res2 <- sum(resid(model2)^2)
+res3 <- sum(resid(model3)^2)
+```
+## Question 16:
+```{r}
+x <- 1:8
+y <- combn(x,2)
+List_residuals <- list()
+ColonneNames <- (colnames(prostateCancer))[-1]
+rss_min <- 300
+for (i in seq(1,length(y),2)){
+  a <- prostateCancer[[ColonneNames[y[i]]]]
+  b <- prostateCancer[[ColonneNames[y[i+1]]]]
+  model <- lm(lcavol ~ a + b, data=prostateCancer)
+  rss <- sum(resid(model)^2)
+  if (rss < rss_min){
+    rss_min = rss
+    a_min <- ColonneNames[y[i]]
+    b_min <- ColonneNames[y[i+1]]
+  }
+  List_residuals <- append(List_residuals,rss)
+}
+cat("The best predictors to use are:",a_min,b_min)
+```
+```{r}
+cat("The error of this two predictors is:",rss_min)
+```
+## Question 17:
+```{r}
+List_predicteur <- list()
+List_residuals_all <- list()
+meilleur_pred <- c()
+for (k in seq(1:8)){
+  x <- 2:9
+  y <- combn(x,k)
+  rss_min <- 5000
+  for (i in 1:(length(y[1,]))){
+    l <- y[,i]
+    model <- lm(lcavol ~ ., data = prostateCancer[,c(1,l)])
+    rss <- sum(resid(model)^2)
+    if (rss < rss_min){
+      rss_min <- rss
+      predict_min <- colnames(prostateCancer[,c(1,l)])[-1]
+      meilleur_pred <- l
+    }
+  }
+  List_residuals_all <- append(List_residuals_all,rss_min)
+  List_predicteur <- append(List_predicteur,list(meilleur_pred))
+  cat("The best predictors to use for k = ",k ,"are:", predict_min,fill = TRUE, ", the error is:",rss_min)
+}
+```
+## Question 18:
+En effet, l'erreur de la somme des carrés des résidus n'est pas un bon indicateur si le choix du nombre des prédicteurs est bon. Car, plus on augmente le nombre de prédicteurs, on peut inclure des prédicteurs qui ne sont pas statistiquement significatif. Et aussi l'augmentation des prédicteurs génére une erreur moindre, mais ceci car il y a plus tôt un effet d'Overfit, mais pas une prédiction pure de la variable dépendante. Ainsi le modèle s'adapte assez bien avec les données d'apprentissage, mais il n'est pas si performant avec de nouveaux données. Ainsi l'un des concepts alternative pour déterminer la pertinence d'un modèle est la Split-Validation, car elle permet d'utiliser des mesures de performances sur les donnés d'apprentissage, mais aussi la capacité de se généraliser sur de nouveaux données.
+```{r}
+x_residus <- 1:8
+spline_fit <- smooth.spline(x_residus,List_residuals_all)
+plot(x_residus,List_residuals_all,ylim = c(40,65))
+lines(spline_fit, col="blue")
+```
+
+## Question 19:
+La split-validation est une méthode d'évaluation des performances, elle consiste à les donnés d'entrainement en deux parties: un ensemble pour l'entrainement et un autre de validation. L'ensemble pour l'entrainement sert à ce qu'on a fait depuis tout à l'heure, l'entrainement de notre modèle, tandis que l'ensemble de validation est utilisé dans l'évaluation des performances sur des données qu'il n'a pas encore vue. Et ainsi, il nous permet de savoir si un overfit a eu lieu, dans le cas ou l'erreur sur l'ensemble des données d'entrainement est faible.
+```{r}
+validation_set <- 1:97 %% 3 == 0
+```
+## Question 20:
+En effet, avec le paramètre subset qu'on a donné, l'adaptation du modèle s'effectue avec les données qui ne sont pas contenus dans la validation set. Et en calculant la MSE (Mean Squared Error), en considérant les prédicteurs lcp et lpsa, on trouve une erreur de l'ordre de $0.46$
+```{r}
+model <- lm(lcavol~., data=prostateCancer[,c(1,6,9)],subset=!validation_set)
+predictNonValid<- predict(model,data.frame(prostateCancer[!validation_set,][-1]))
+errorNonValid <- mean((prostateCancer[!validation_set,]$lcavol - predictNonValid)^2)
+print(errorNonValid)
+```
+## Question 21:
+On remarque que l'erreur sur le Validation Set augmente, car notre modèle n'a pas pu s'entrainer sur cet ensemble de donnés. Ainsi cet erreur nous donne une idée sur les performances de notre modèle sur des données qu'il n'a jamais vu. On trouve dans ce cas, le Mean squared Error, est de l'ordre de $0.56$.
+```{r}
+predictValid <- predict(object = model, newdata = data.frame(prostateCancer[validation_set,][-1]))
+errorValid <- mean((prostateCancer[validation_set,]$lcavol - predictValid)^2)
+print(errorValid)
+```
+## Question 22:
+
+```{r}
+# fonction pour trouver le meilleur modèle
+best_model <- function(valid, list_train_error, list_pred_error) {
+  # initialisation des listes pour stocker les erreurs d'entraînement et de prédiction
+  list_train_error = list()
+  list_pred_error = list()
+  
+  # boucle sur les 8 prédicteurs pour construire les modèles
+  for (k in 1:8) {
+    # ajustement du modèle sur les données d'entraînement, en utilisant les prédicteurs sélectionnés par List_predicteur[[k]]
+    model <- lm(lcavol ~ . , data = prostateCancer[!valid, c(1, List_predicteur[[k]])])
+    
+    # prédiction sur les données d'entraînement et calcul de l'erreur
+    lcavolPredictionN <- predict(object = model, newdata = data.frame(prostateCancer[!valid,][-1]))
+    mean_tr_err = mean((prostateCancer[!valid,]$lcavol - lcavolPredictionN)**2)
+    
+    # stockage de l'erreur d'entraînement dans la liste
+    list_train_error = append(list_train_error, mean_tr_err)
+    
+    # prédiction sur les données de validation et calcul de l'erreur
+    lcavolPredictionN  <- predict(object = model, newdata = data.frame(prostateCancer[valid,][-1]))
+    prediction_error <- mean((prostateCancer[valid,]$lcavol - lcavolPredictionN)**2)
+    
+    # stockage de l'erreur de prédiction dans la liste
+    list_pred_error = append(list_pred_error, prediction_error)
+  }
+  
+  # retourne un dictionnaire contenant l'indice du meilleur modèle et les listes d'erreurs
+  return(list(optimal_value = which.min(list_pred_error), list_pred_error = list_pred_error, list_train_error = list_train_error))
+}
+
+# appel de la fonction best_model sur les données de validation
+list_result <- best_model(validation_set, list_train_error, list_pred_error)
+
+# récupération de l'indice du meilleur modèle
+optimal_value <- list_result$optimal_value
+
+# récupération des listes d'erreurs d'entraînement et de prédiction
+list_train_error <- list_result$list_train_error
+list_pred_error <- list_result$list_pred_error
+
+# tracé des courbes d'erreurs en fonction de la taille des prédicteurs
+matplot((1:8), cbind(list_pred_error, list_train_error), type = "l", col = c("blue","red"), xlab = "size of predictors", ylab = "", lty = 1:2)
+
+# ajout d'une légende
+legend("topright", legend = c("Erreur de test", "Erreur d'entraînement"), lty = 1:2, col = c("blue", "red"))
+
+```
+Et donc on déduit que les meilleurs prédicteurs sont :
+```{r}
+cat("Les meilleurs prédicteurs sont:",names(prostateCancer)[List_predicteur[[optimal_value]]],fill = TRUE)
+```
+
+## Question 23:
+En effet, le problème majeur du split-validation est la dépendance de la manière avec laquelle nos données sont subdivisés, si on change notre division des données, peut-être le choix du modèle optimal changera. Dans notre cas, si on inclut dans nos données de validation la colonne 37, qui est la seule colonne ayant un gleason = 8, on remarque un modèle de prédiction différent.
+
+```{r}
+validation_set_new <- 1:97 %% 3 == 2
+validation_set_new[37] <- FALSE
+cat("Les meilleurs prédicteurs sont:",names(prostateCancer)[List_predicteur[[best_model(validation_set_new,list_train_error,list_pred_error)$optimal_value]]],fill = TRUE)
+```
+Et donc on remarque un changement de modèle par rapport à la question 22. Ainsi pour échapper à ce problème, on utilise la méthode de cross-validation qui nous permet de changer nos données d'entrainement et de validation.
+
+```{r}
+set.seed(42)
+# Index de lignes aléatoires pour la sélection des données de test et de validation croisée
+idx_random_rows = sample(1:97, replace = FALSE)
+
+# Nombre d'observations pour les données de test et sélection croisée
+n_test_obs = round(0.2 * 97)
+
+# Variables prédictives et variable cible pour les données de test
+X_test  = prostateCancer[idx_random_rows[1:n_test_obs], ][-1]
+Y_test = prostateCancer[idx_random_rows[1:n_test_obs], ][1]
+
+# Variables prédictives et variable cible pour la sélection croisée
+X_cv = prostateCancer[c(idx_random_rows[(n_test_obs+1):97], 37), ][-1]
+Y_cv = prostateCancer[c(idx_random_rows[(n_test_obs+1):97], 37), ][1]
+
+# Nombre de plis pour la sélection croisée et nombre d'observations dans le pli de validation
+n_folds = 5
+n_cv_obs = length(Y_cv[, 1])
+
+# Vecteur pour stocker les erreurs de validation croisée pour chaque modèle
+cv_error_vec = c()
+
+# Boucle pour ajuster différents modèles et calculer leurs erreurs de validation croisée
+for (i in 1:8){
+  cv_model_error_vec = c()
+  for (fold in 1:n_folds){
+    idx_val = setdiff(fold + seq(0, n_cv_obs - n_folds, by = n_folds), which(X_cv$gleason == 8))
+    X_train = X_cv[-idx_val,]
+    Y_train = Y_cv[-idx_val,]
+    X_val = X_cv[idx_val,]
+    Y_val = Y_cv[idx_val,]
+    model = lm(Y_train ~ . , data = data.frame(cbind(Y_train, X_train[List_predicteur[[i]] - 1])))
+    error = predict(object = model, newdata = data.frame(X_val)) - Y_val
+    cv_model_error_vec = c(cv_model_error_vec, mean(error^2))
+  }
+  cv_error_vec = c(cv_error_vec, mean(cv_model_error_vec))
+}
+
+# Indice du modèle avec l'erreur de validation croisée minimale
+best_model_idx = which.min(cv_error_vec)
+
+# Modèle ajusté avec la sélection de variables optimale
+best_model = lm(lcavol ~ . , data = data.frame(cbind(Y_cv, X_cv[List_predicteur[[which.min(cv_error_vec)]] - 1])))
+
+# Prédiction de la variable cible pour les données de test avec le meilleur modèle
+lcavol_predicted_test = predict(object = best_model, newdata = X_test)
+
+# Erreur de prédiction pour les données de test avec le meilleur modèle
+test_error = mean((Y_test[,] - lcavol_predicted_test)^2)
+
+# Modèle ajusté avec la cinquième sélection de variables (pour comparaison)
+best_model_1 = lm(lcavol ~ . , data = data.frame(cbind(Y_cv, X_cv[List_predicteur[[5]] - 1])))
+
+# Prédiction de la variable cible pour les données de test avec le deuxième meilleur modèle
+lcavol_predicted_test_1 = predict(object = best_model_1, newdata = X_test)
+
+# Erreur de prédiction pour les données de test avec le deuxième meilleur modèle
+test_error_1 = mean((Y_test[,] - lcavol_predicted_test_1)^2)
+meilleur_taille <- which.min(cv_error_vec)
+cat("La meilleur taille du modèle de prédiction est:",meilleur_taille)
+```
+On remarque que la taille des prédicteurs de la cross validation est 6, ainsi l'erreur de test de ce modèle là est inférieur à celle du modèle de taille 5.
+
+## Question 24
+
+```{r}
+meilleur_modèle <- lm(lcavol ~ ., data = prostateCancer[,c(1,List_predicteur[[meilleur_taille]]-1)])
+summary(meilleur_modèle)
+```
+Le choix du meilleur modèle dépend de la méthode de division des données. Dans la fonction précédente, nous avons fixé un nombre de graine pour avoir les mêmes résultats. La validation croisée K-fold semble être la meilleure méthode pour choisir le meilleur modèle de prédiction de lcoval.
+
+En appliquant le meilleur modèle, nous pouvons dire que le modèle avec 6 prédicteurs (lweight, age, svi, lcp, gleason et pgg45) semble s'ajuster raisonnablement bien aux données avec un R² ajusté de 0,5029 et une erreur standard résiduelle de 0,831. Le F-statistique de 13,14 avec une valeur de p très faible indique que le modèle est globalement significatif et qu'au moins une des variables prédictives est significativement liée à la variable de réponse lcavol.

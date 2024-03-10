@@ -1,0 +1,103 @@
+---
+title: "TP6"
+output: html_document
+date: "2023-05-08"
+---
+### Question 1:
+```{r}
+dataSAheart <- read.csv("SAheart.csv", header = TRUE)
+str(dataSAheart)
+hist(dataSAheart$sbp)
+hist(dataSAheart$tobacco)
+hist(dataSAheart$ldl)
+hist(dataSAheart$adiposity)
+hist(dataSAheart$typea)
+hist(dataSAheart$obesity)
+hist(dataSAheart$alcohol)
+hist(dataSAheart$age)
+hist(dataSAheart$chd)
+pairs(dataSAheart[ , colnames(dataSAheart) != "famhist"])
+testSAheart <- dataSAheart[(nrow(dataSAheart)-9):nrow(dataSAheart),]
+
+```
+#### Question 2:
+```{r}
+fit_model <- glm(chd ~ sbp + tobacco + ldl + adiposity + famhist + typea + obesity + alcohol + age, data = dataSAheart, family = binomial(link = "logit"))
+summary(fit_model)
+confint(fit_model)
+
+```
+
+on voit d'après les résultats précédentes que le modéle est significaif selon le test sur le maximum de vraisemblance et pour les variables on voit que les prédicteurs : sbp, adiposity, obesity et alcohol ont une p-value inférieur à 0.05 (le seuil communement choisi) avec un intervalle de confiance fortêment centré sur 0 et une faible corrélation avec le variable dépendante donc on peut dire que ces variables ne sont pas significatives ou l'uns d'entre eux ne sont pas significatives si on on considére les autres on va voir les quelles après par les autres méthodes de sélection.
+
+### Question 3:
+```{r}
+library(MASS)
+# Perform backward variable selection using stepAIC()
+step.model <- stepAIC(fit_model, direction = "backward")
+summary(step.model)
+```
+
+les AIC backward a sélectionné les prédicteurs : tabacco, ldl, famhist, typea, age . ce qui montre l'analyse fait précedent . en réalité on que:
+Le coefficient positif de famhist et son importance dans le modèle indique que les personnes ayant des antécédents familiaux de maladies cardiaques ont une probabilité plus élevée d'être atteints de maladies cardiaques que celles qui n'ont pas d'antécédents familiaux. L'estimation du coefficient pour famhist est de 0.9253704, ce qui signifie que les personnes ayant des antécédents familiaux de maladie cardiaque ont approx e^0.9253704  fois plus de chances d'être atteintes de maladies cardiaques que celles qui n'ont pas d'antécédents familiaux, toutes les autres variables étant constantes.
+
+Et pour pour l'âge ça suggère qu'à mesure que l'âge augmente, le logarithme de la probabilité d'être atteint d'une maladie coronarienne augmente également. Ce qui signifie que, pour chaque année d'augmentation de l'âge, le logarithme des chances d'être atteint de la maladie augmente, toutes les autres variables étant constantes.
+
+Les coefficients des autres prédicteurs (sbp, adiposité, obésité et alcool) ne sont pas statistiquement significatifs au niveau de 0,05, ce qui signifie qu'il n'y a pas suffisamment de preuves pour conclure que ces prédicteurs sont associés à la probabilité d'avoir un chd, toutes les autres variables restant constantes.
+
+### Question 4:
+```{r}
+library(MASS)
+
+# Fit the constant model
+const.model <- glm(chd ~ 1, data = dataSAheart, family = "binomial")
+
+# Perform forward variable selection using stepAIC()
+backward.model <- stepAIC(const.model, direction = "forward", scope = formula(~ sbp + tobacco + ldl + adiposity + famhist + typea + obesity + alcohol + age), data = dataSAheart)
+
+summary(backward.model)
+AIC(step.model)
+AIC(backward.model)
+
+
+```
+
+
+Les prédicteurs sélectionnés par AIC forward sont : age , famhist , tobacco , typea et ldl
+sont celles choisi par AIC backward . donc malgré le critére d'évaluation différent de AIC forward et AIC backward on a trouvé les mêmes variables sélectionnées. Ce qui signifie la forte chance que les variables éliminées ne soient pas statistiquement siginificatifs.
+
+### Question 5:
+```{r}
+# Predict the probability of CHD on the test data
+testSAheart[ , colnames(testSAheart) == "chd"]
+chd_prob <- predict(fit_model, newdata = testSAheart, type = "response")
+chd_prob
+
+```
+
+
+### Question 6:
+
+Linear discriminant analysis  (LDA) est une méthode de classification qui permet de trouver une combinaison linéaire de variables prédictives séparant au mieux les classes d'un ensemble de données donné. Dans le cas présent, nous pouvons utiliser l'analyse discriminante linéaire pour classer les individus comme atteints ou non d'une maladie coronarienne en fonction de leurs valeurs pour les variables prédictives.
+
+Nous pouvons utiliser la fonction predict() pour classer de nouvelles données sur la base du modèle LDA. La fonction predict() renvoie une liste à deux composantes : class et posterior. La composante classe contient les étiquettes de classe prédites (0 pour pas de coronaropathie, 1 pour coronaropathie) et la composante postérieure contient les probabilités prédites de chaque classe.
+
+```{r}
+library(MASS)
+
+# Fit the LDA model
+lda.model <- lda(chd ~ sbp + tobacco + ldl + adiposity + famhist + typea + obesity + alcohol + age, data = dataSAheart)
+
+# Predict the CHD status on the last 10 rows
+lda.pred <- predict(lda.model, newdata = tail(dataSAheart, 10))
+
+# Print the predicted CHD status and probabilities
+lda.pred$class
+lda.pred$posterior
+
+
+```
+
+Pour comparer les résultats de LDA avec le modèle de régression logistique que nous avons ajusté précédemment, nous pouvons utiliser des mesures telles que l'exactitude, la précision, le rappel et le score F1. Nous pouvons également examiner la matrice de confusion pour connaître le nombre de vrais positifs, de vrais négatifs, de faux positifs et de faux négatifs, on voit que les deux modèles ont presque la même probabilité de prédiction.
+
+Cependant, il est important de noter que la méthode LDA suppose que les prédicteurs ont une distribution normale multivariée dans chaque classe et que les matrices de covariance sont égales entre les classes. Ces hypothèses peuvent ne pas se vérifier dans la pratique et affecter la précision et la fiabilité des résultats de la classification. C'est pourquoi il est toujours bon d'évaluer les hypothèses et les limites de la méthode de classification avant de tirer des conclusions ou de prendre des décisions sur la base des résultats.

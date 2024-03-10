@@ -1,0 +1,277 @@
+---
+title: "TP4-PCA"
+output: html_document
+date: "2023-03-25"
+author: "Mohamed-Aymane AKIL - Tariq Sereir - Mohamed Lemine Isselmou"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### *Data Preparation*
+
+##### Question 1:
+
+```{r}
+# install.packages("fields")
+NAm2 <- read.table("NAm2.txt", header=TRUE, stringsAsFactors = TRUE) 
+data.NAm2 <- as.data.frame(NAm2)
+attach(data.NAm2)
+coord <- unique(NAm2[, c("Pop","long","lat")]) 
+mypop <- unique(NAm2$Pop)
+npop <- length(mypop)
+palcol <- c("black","red","cyan","orange","brown","blue","pink","purple","darkgreen")
+mypch <- rep(15:17, each=length(mypop)/3)
+mycol <- rep(palcol, length=length(mypop))
+plot(coord[, c("long","lat")], pch=mypch, col=mycol, asp=1)
+legend("bottomleft", legend=coord$Pop, col=mycol, pch=mypch,
+       cex=.75, ncol=2)
+library(maps)
+library(fields)
+map("world", add=TRUE) 
+```
+
+Dans ce code ci-dessus, on effectue le traçage des différents tribus en Amérique(Chipewyan, Kogi,...). Le traçage continue les tribus avec leurs latitude et longitude correpondante dans la carte du monde. 
+
+##### Question 2:
+
+Le modèle peut avoir un problème de surajustement (overfitting) car le nombre de variables explicatives est beaucoup plus grand que le nombre d'observations.
+Le rang de la matrice est inférieur a p (le nombre de prédicteurs).
+Rang(X) < p, ou X ∈ R^(N ×p) est la matrice de données.
+
+```{r}
+# fonction glance de la librairie broom qui est plus concice
+library(broom)
+NAaux <- NAm2[,-c(1:7)]
+longModel <- lm(long~ ., data=NAaux)
+# compte le nombre de coefficients dans le modèle qui ne sont pas manquants (i.e., qui ont une valeur)
+print(sum(!is.na(coef(longModel))))
+head(coef(longModel)[!is.na(coef(longModel))])
+# utilise le modèle de régression linéaire longModel pour prédire la longitude
+longPredict <- predict(longModel, newdata = NAaux)
+head(longPredict)
+glance(longModel)
+```
+
+### *Principal component analysis*
+
+##### Question 3:
+
+On utilise le scale.unit dans la fonction pca pour des variables d'unités différentes or dans notre cas, on a des marqueurs génétiques qui ne prennent que deux valeurs 0 ou 1, cependant, on peut comparer les graphes de pca obtenus le graphe de pca avec normalisation est plus lisible, les valeurs sont moins en "bloc".
+De plus la variance expliquées par les 2 premières composantes sont supérieures avec sans normalisation.
+
+```{r}
+NAm2GeneticData <- NAm2[, grep("L", colnames(NAm2), value=TRUE)]
+library(FactoMineR)
+pca.NAm2GeneticData <- PCA(NAm2GeneticData, scale.unit = FALSE, graph = FALSE)
+plot.PCA(pca.NAm2GeneticData, title  = "PCA sans normalisation")
+pca.NAm2GeneticData.TRUE <- PCA(NAm2GeneticData, scale.unit = TRUE, graph = FALSE)
+plot.PCA(pca.NAm2GeneticData.TRUE, title  = "PCA avec normalisation")
+#sum.pca <- summary(pca.NAm2GeneticData)
+```
+
+##### Question 4:
+
+Pour les deux premières composantes on a le graphe suivant:
+
+```{r}
+mypop <- unique(NAm2$Pop)
+npop <- length(mypop)
+caxes = c(1,2)
+plot(pca.NAm2GeneticData, axes= caxes, label="none", col.ind="white", graph.type="classic")
+for (i in 1:npop) 
+{
+    points(pca.NAm2GeneticData$ind$coord[which(NAm2$Pop == mypop[i]), caxes],
+      col=mycol[i], pch=mypch[i])
+}
+legend("bottomleft", legend=mypop, col=mycol, pch=mypch, cex=.5, ncol=3)
+```
+
+Pour la troisième et quatrième composantes on a le graphe suivant:
+
+```{r}
+mypop <- unique(NAm2$Pop)
+npop <- length(mypop)
+caxes = c(3,4)
+plot(pca.NAm2GeneticData, axes= caxes, label="none", col.ind="white", graph.type="classic")
+for (i in 1:npop) 
+{
+    points(pca.NAm2GeneticData$ind$coord[which(NAm2$Pop == mypop[i]), caxes],
+      col=mycol[i], pch=mypch[i])
+}
+legend("bottomleft", legend=mypop, col=mycol, pch=mypch, cex=.5, ncol=3)
+```
+
+##### Question 5:
+
+D'après le graphe de la question 4, on a les variances capturées par les deux premières composantes sont respectivement: 2.05% et 1.52%. Et donc les deux composantes arrivent à captuer une variance de l'orde de 3.57% (assez faible). En effet, on remarque que les variances capturés par chaque composante sont assez faibles. Et donc on a besoin d'un nombre conséquent de composante si on veut représenter d'une bonne manière les marqueurs génétiques. 
+
+##### Question 6:
+
+```{r}
+matrice.pca <- as.matrix(pca.NAm2GeneticData$eig)
+Nbr.estim <- estim_ncp(matrice.pca)
+print(head(matrice.pca))
+print(Nbr.estim)
+```
+
+En utilisant la fonction estim_ncp, on obtient une estimation d'un nombre optimal de composantes qui peuvent expliquer une part important de la variance. Or dans notre cas, on a un nombre de compsante égale à 2 avec une variance capturé de l'orde de 3.5%, ce qui insuffisant. Ainsi il faut trouvez une autre méthode pour estimer le nombre de composantes qui capture une partie importante de la variance.
+
+### *Principal components regression (PCR)*
+
+##### Question 7:
+
+Cherchons d'abord les 100 premières composantes qui capturent le nombre le plus important de composante.
+
+```{r}
+pca.NAm2GeneticData <- prcomp(NAm2GeneticData)
+pca.reg <- pca.NAm2GeneticData$x[,1:100]
+```
+
+Pour le modèle de la latitude:
+
+```{r}
+lm.NAm2.lat <- lm(lat ~ .,data = as.data.frame(pca.reg))
+sum.lm.NAm2.lat <- summary(lm.NAm2.lat)
+```
+
+Pour le modèle de la longitude:
+
+```{r}
+lm.NAm2.long <- lm(long ~ .,data = as.data.frame(pca.reg))
+sum.lm.NAm2.long <- summary(lm.NAm2.long)
+```
+
+##### Question 8:
+
+On effectue le traçage des valeurs prédites de la longitude et la latitude après le fit de nos modèles.
+
+```{r}
+library(maps)
+plot(lm.NAm2.long$fitted.values, lm.NAm2.lat$fitted.values, xlab = "Prédictions lattitudes", asp = 1, ylab = "Prédictions longitudes", col = "white", main = "Prédictions de la latitude et de la longitude (100 PCA)")
+for (i in 1:npop) {
+  lines(lm.NAm2.long$fitted.values[which(NAm2[,3] == mypop[i])], lm.NAm2.lat$fitted.values[which(NAm2[,3] == mypop[i])], type = "p", col = palcol[i], pch = mypch[i])
+}
+legend("bottomleft", legend = mypop, col = palcol, lty = -1, pch = mypch, cex = 0.75, ncol = 2, lwd = 2)
+map("world", add = TRUE)
+```
+
+Le premier graphique montre que les individus d'une même tribu se superposent car ils ont la même latitude et longitude. Dans le deuxième graphique, nous avons utilisé un modèle de régression basé sur les 100 premières composantes principales pour prédire la latitude et la longitude de chaque individu. Bien que ce modèle ait une bonne précision pour prédire la localisation de populations éloignées, il n'est pas suffisamment précis pour distinguer les individus de tribus proches. En conclusion, trouver la localisation géographique d'individus en dehors de la base de données à partir de leurs marqueurs génétiques ne sera pas toujours exact, et ce modèle peut prédire de manière erronée leur localisation. Il pourrait être utile de combiner ces méthodes avec une classification utilisant l'algorithme de k-means autour de la localisation exacte de chaque tribu.
+
+### *PCR And Cross-validation*
+
+##### Question 9:
+
+```{r}
+idx <- sample(10,size=nrow(NAm2),replace=TRUE)
+```
+
+##### Question 10:
+
+
+Effectuons la prédiction sur la validation set
+
+```{r}
+donnees <- data.NAm2[,-c(1:8)]
+Y <- data.NAm2[c(7,8)]
+cross.validation <- function(naxes){
+  # une dataframe vide
+  pred.coord.cf <- data.frame(matrix(ncol=2,nrow=494))
+  colnames(pred.coord.cf) <- c("lat","long")
+  # une variable qui calcule l'erreur
+  erreur.entrainement = 0
+  
+  for (i in 1:10){
+    
+    # séparation en 2 parties: entrainement et validation
+    data.train <- donnees[idx != i,]
+    data.test <- donnees[idx == i,]
+    
+    # recentrage des points de données en utilisant l'ensemble d'entrainement
+    data.train <- data.train - colMeans(data.train)
+    data.test <- data.test - colMeans(data.test)
+    # On effectue une PCA sur notre data d'entrainement
+    
+    pca.data.train <- prcomp(data.train)
+    A.data.train <- pca.data.train$x[,1:naxes]
+    # On construit nos modèles pour la régression
+    lm.NAm2.lat.1 <- lm(lat[idx != i] ~.,data = as.data.frame(A.data.train))
+    lm.NAm2.long.1 <- lm(long[idx != i]  ~.,data = as.data.frame(A.data.train))
+    # On obtient la matrice de projection en se limitant au naxes vecteurs propres premiers
+    projection.matrix = pca.data.train$rotation[,1:naxes]
+    # On projete notre data sur la matrice de projection
+    A.data.test <- as.matrix(data.test)%*% as.matrix(projection.matrix) 
+    # On calcule les valeurs prédites
+    pred.lat <- predict(lm.NAm2.lat.1, newdata = data.frame(A.data.test))
+    pred.long <- predict(lm.NAm2.long.1, newdata = data.frame(A.data.test))
+    # On conserve ses valeurs dans pred.coord.cf
+    pred.coord.cf[idx == i, "lat"] = pred.lat
+    pred.coord.cf[idx == i, "long"] = pred.long
+    # On calcule l'erreur d'entrainement
+    erreur.entrainement = erreur.entrainement + mean(rdist.earth.vec(Y[idx!= i, ],cbind(lm.NAm2.lat.1$fitted.values,lm.NAm2.long.1$fitted.values),miles = F))
+  }
+  erreur.entrainement = erreur.entrainement/10
+  erreur.test = mean(rdist.earth.vec(pred.coord.cf,Y,miles = F))
+  return (list(erreur.entrainement,erreur.test))
+}
+```
+
+```{r}
+erreur = cross.validation(4)
+cat("L'erreur d'entrainement de notre modèle est: ",erreur[[1]],"\n")
+cat("L'erreur de prédiction de notre modèle est: ",erreur[[2]])
+```
+
+L'erreur d'entraînement est de 1093.68, ce qui signifie que le modèle prévoit en moyenne des coordonnées géographiques (latitude et longitude) pour les points d'entraînement avec une erreur de 1093.68 kilomètres.
+Le modèle prévoit en moyenne les coordonnées géographiques pour les points de validation avec une erreur de 1369.62 kilomètres.
+
+##### Question 11:
+```{r}
+naxes <- seq(from = 2, to = 440, by = 10)
+erreur.entrainement.list <- c()
+erreur.test.list <- c()
+for(j in naxes){
+  erreur = cross.validation(j)
+  erreur.entrainement.list <- c(erreur.entrainement.list,erreur[[1]])
+  erreur.test.list <- c(erreur.test.list,erreur[[2]])
+}
+```
+## Question 12:
+
+```{r}
+plot(naxes, erreur.test.list, ylim = c(0, 2000), col = "red", 
+     main = "Erreur d'entraînement et de prédiction", 
+     xlab = "Nombre de composantes principales", ylab = "L'erreur")
+legend("topright", legend = "Erreur de prédiction", col = "red", lty = 1)
+par(new = TRUE)
+plot(naxes, erreur.entrainement.list, ylim = c(0, 2000), 
+     xlab = "Nombre de composantes principales", ylab = "erreur", col = "blue")
+legend("topleft", legend = "Erreur d'entraînement", col = "blue", lty = 1)
+```
+
+On choisit de garder le modèle avec le minimum erreur de prédiction :
+```{r}
+meilleur.choix = which.min(erreur.test.list)
+cat("On choisit de garder ", naxes[meilleur.choix],"composantes principales, et son erreur de prédiciton est:", erreur.test.list[meilleur.choix],"\n")
+cat("Son erreur d'entrainement est:",erreur.entrainement.list[meilleur.choix])
+```
+On remarque que l'erreur de prédiction est toujours supérieur à l'erreur d'entrainement, ce qui est assez logique vu le overfitting qui arrive sur les données d'entrainements. On tracera la nouvelle courbe, en s'appuyant sur les 312 composantes principales.
+
+```{r}
+pca.NAm2GeneticData <- prcomp(NAm2GeneticData)
+pca.reg <- pca.NAm2GeneticData$x[,1:312]
+lm.NAm2.lat <- lm(lat ~ .,data = as.data.frame(pca.reg))
+lm.NAm2.long <- lm(long ~ .,data = as.data.frame(pca.reg))
+plot(lm.NAm2.long$fitted.values, lm.NAm2.lat$fitted.values, xlab = "Prédictions lattitudes", asp = 1, ylab = "Prédictions longitudes", col = "white", main = "Prédictions de la latitude et de la longitude (312 PCA)")
+for (i in 1:npop) {
+  lines(lm.NAm2.long$fitted.values[which(NAm2[,3] == mypop[i])], lm.NAm2.lat$fitted.values[which(NAm2[,3] == mypop[i])], type = "p", col = palcol[i], pch = mypch[i])
+}
+legend("bottomleft", legend = mypop, col = palcol, lty = -1, pch = mypch, cex = 0.75, ncol = 2, lwd = 2)
+map("world", add = TRUE)
+```
+
+
+##### Question 13:
+
+Ce TP avait pour but de prédire avec précision l'origine géographique des individus à partir de leurs marqueurs génétiques en utilisant la PCA et la PCR. Après avoir utilisé la PCR et la validation croisée avec K=10, le modèle utilisant les 312 premières composantes principales a donné les meilleurs résultats. Cependant, la validation croisée présente des limitations, car elle peut entraîner un surajustement et peut prendre beaucoup de temps. De plus, la nature des données peut être problématique en raison du grand nombre de prédicteurs génétiques avec peu ou pas d'effet sur la réponse. Pour améliorer le modèle, nous pouvons éliminer les prédicteurs hautement corrélés, créer des ensembles d'apprentissage et de test équilibrés pour chaque tribu et utiliser la fonction PCR intégrée pour gagner du temps. En conclusion, la PCR peut être un outil utile pour prédire l'origine géographique à partir de marqueurs génétiques, mais elle doit être utilisée avec prudence et en prenant en compte les limites de la validation croisée et de la nature des données.
